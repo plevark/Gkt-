@@ -166,6 +166,11 @@
             padding: 4px 12px 4px 16px;
             border: 1px solid rgba(102, 194, 194, 0.25);
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .points-area:hover {
+            border-color: #66C2C2;
+            box-shadow: 0 4px 24px rgba(102, 194, 194, 0.2);
         }
 
         .points-number {
@@ -174,6 +179,8 @@
             color: #F5F5F5;
             font-family: 'Dancing Script', cursive;
             letter-spacing: 1px;
+            min-width: 30px;
+            text-align: center;
         }
 
         .points-add {
@@ -220,6 +227,11 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(102, 194, 194, 0.3);
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .search-bar:hover {
+            border-color: #66C2C2;
+            box-shadow: 0 4px 20px rgba(102, 194, 194, 0.15);
         }
 
         .search-bar .confetti {
@@ -268,6 +280,13 @@
             font-size: 1.1rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(73, 164, 164, 0.3);
+            transition: all 0.3s ease;
+        }
+        .search-bar .lupa:hover {
+            background: #66C2C2;
+            color: #1A1A1A;
+            border-color: #66C2C2;
+            transform: scale(1.05);
         }
 
         /* ---- NAV TABS ---- */
@@ -282,6 +301,10 @@
             z-index: 2;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(102, 194, 194, 0.3);
+            transition: all 0.3s ease;
+        }
+        .nav-tabs:hover {
+            border-color: #66C2C2;
         }
 
         .nav-list {
@@ -299,7 +322,7 @@
 
         .nav-list a {
             display: block;
-            background: rgba(102, 194, 194, 0.3);
+            background: rgba(102, 194, 194, 0.2);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             color: #F5F5F5;
@@ -354,7 +377,7 @@
         .pet-card:hover {
             transform: translateY(-6px) scale(1.02);
             border-color: #66C2C2;
-            box-shadow: 0 12px 40px rgba(102, 194, 194, 0.2);
+            box-shadow: 0 12px 40px rgba(102, 194, 194, 0.25);
         }
 
         @keyframes fadeUp {
@@ -370,7 +393,6 @@
         .pet-card:nth-child(6) { animation-delay: 0.30s; }
         .pet-card:nth-child(7) { animation-delay: 0.35s; }
         .pet-card:nth-child(8) { animation-delay: 0.40s; }
-        .pet-card:nth-child(9) { animation-delay: 0.45s; }
 
         .pet-image {
             width: 100%;
@@ -555,8 +577,8 @@
         }
 
         @keyframes fadeInModal {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .modal-box {
@@ -570,6 +592,12 @@
             border: 1px solid rgba(102, 194, 194, 0.3);
             box-shadow: 0 24px 64px rgba(0,0,0,0.6);
             position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-title {
@@ -649,6 +677,20 @@
             margin: 12px 0;
             opacity: 0.8;
             font-family: 'Dancing Script', cursive;
+            line-height: 1.6;
+        }
+
+        .modal-message a {
+            color: #66C2C2;
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 1px dotted #66C2C2;
+            transition: all 0.3s ease;
+        }
+
+        .modal-message a:hover {
+            color: #49A4A4;
+            border-bottom-color: #49A4A4;
         }
 
         /* ---- LISTA DE ADMIN ---- */
@@ -866,12 +908,16 @@
     <!-- MODAL CÓDIGO -->
     <div class="modal-overlay" id="codeModal">
         <div class="modal-box">
-            <div class="modal-title">✧Canjear Código✧</div>
+            <div class="modal-title">✧ Canjear Código ✧</div>
             <input type="text" class="modal-input" id="codeInput" placeholder="Ingresa tu código" maxlength="20" autocomplete="off" />
-            <div class="modal-message" id="codeMessage">Ingresa el código para obtener puntos</div>
+            <div class="modal-message" id="codeMessage">
+                🌟 Ingresa el código para obtener puntos<br>
+                <span style="font-size:0.9rem;opacity:0.7;">✨ ¿Quieres un code para ti solo?<br> 
+                <a href="https://chat.whatsapp.com/HC3SGJeJVTn2bq7pWRNhWQ" target="_blank">¡Dale al botón de comunidad y participa en actividades!</a> ✨</span>
+            </div>
             <div class="modal-actions">
                 <button class="modal-btn confirm" id="confirmCodeBtn">Canjear</button>
-                <button class="modal-btn cancel" id="closeCodeModal">Cancelar</button>
+                <button class="modal-btn cancel" id="closeCodeModal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -879,10 +925,10 @@
     <!-- MODAL CONFIRMACIÓN DE COMPRA -->
     <div class="modal-overlay" id="buyModal">
         <div class="modal-box">
-            <div class="modal-title">🐾 ¿Estás seguro?</div>
+            <div class="modal-title">🐾 ¿Estás seguro? 🐾</div>
             <div class="modal-message" id="buyMessage">¿Deseas comprar esta mascota?</div>
             <div class="modal-actions">
-                <button class="modal-btn confirm" id="confirmBuyBtn">Sí</button>
+                <button class="modal-btn confirm" id="confirmBuyBtn">Sí ✨</button>
                 <button class="modal-btn cancel" id="cancelBuyBtn">No</button>
             </div>
         </div>
@@ -913,8 +959,8 @@
             { id: 8, name: 'Huevo azteca', price: 200, img: 'https://static.wikia.nocookie.net/adoptme/images/d/d8/Huevo_azteca.png/revision/latest/thumbnail/width/360/height/360?cb=20250815155051&path-prefix=es' }
         ];
 
-        // Códigos (usados se marcan)
-        const codes = {
+        // Códigos predeterminados (se cargarán desde localStorage si existen)
+        const defaultCodes = {
             '7X9K2M4P': { points: 62, used: false },
             'L5B1V7N3': { points: 36, used: false },
             'Q8W4E2R9': { points: 29, used: false },
@@ -938,7 +984,8 @@
 
         // Estado
         let userPoints = 0;
-        let selectedPet = null; // para compra
+        let usedCodes = {}; // { code: true }
+        let selectedPet = null;
 
         // Elementos DOM
         const pointsDisplay = document.getElementById('pointsDisplay');
@@ -951,6 +998,29 @@
         const adminModal = document.getElementById('adminModal');
         const adminMessage = document.getElementById('adminMessage');
         const adminList = document.getElementById('adminList');
+
+        // ----- PERSISTENCIA -----
+        function loadState() {
+            const savedPoints = localStorage.getItem('pointsUser');
+            if (savedPoints !== null) {
+                userPoints = parseInt(savedPoints, 10);
+            }
+            const savedUsedCodes = localStorage.getItem('usedCodes');
+            if (savedUsedCodes) {
+                usedCodes = JSON.parse(savedUsedCodes);
+            }
+            // Sincronizar con defaultCodes para marcar usados
+            for (let code in defaultCodes) {
+                if (usedCodes[code]) {
+                    defaultCodes[code].used = true;
+                }
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('pointsUser', userPoints.toString());
+            localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
+        }
 
         // ----- RENDER CATÁLOGO -----
         function renderCatalog() {
@@ -971,12 +1041,11 @@
                     </div>
                     <div class="pet-name">${pet.name} ${badgeHtml}</div>
                     <div class="pet-price">✦ ${pet.price} pts</div>
-                    <button class="pet-buy" data-id="${pet.id}">Comprar</button>
+                    <button class="pet-buy" data-id="${pet.id}">Comprar 🛒</button>
                 `;
                 catalogContainer.appendChild(card);
             });
 
-            // Event listeners de compra
             document.querySelectorAll('.pet-buy').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.dataset.id);
@@ -992,13 +1061,18 @@
         // ----- ACTUALIZAR PUNTOS -----
         function updatePointsDisplay() {
             pointsDisplay.textContent = userPoints;
+            saveState();
         }
 
         // ----- MODAL CÓDIGO -----
         document.getElementById('addPointsBtn').addEventListener('click', () => {
             codeModal.classList.add('active');
             codeInput.value = '';
-            codeMessage.textContent = 'Ingresa el código para obtener puntos';
+            codeMessage.innerHTML = `
+                🌟 Ingresa el código para obtener puntos<br>
+                <span style="font-size:0.9rem;opacity:0.7;">✨ ¿Quieres un code para ti solo?<br> 
+                <a href="https://chat.whatsapp.com/HC3SGJeJVTn2bq7pWRNhWQ" target="_blank">¡Dale al botón de comunidad y participa en actividades!</a> ✨</span>
+            `;
             codeMessage.style.color = '#F5F5F5';
             codeInput.focus();
         });
@@ -1010,30 +1084,31 @@
         document.getElementById('confirmCodeBtn').addEventListener('click', () => {
             const code = codeInput.value.trim().toUpperCase();
             if (!code) {
-                codeMessage.textContent = '⚠️ Ingresa un código válido';
+                codeMessage.innerHTML = '⚠️ Ingresa un código válido';
                 codeMessage.style.color = '#FF6B6B';
                 return;
             }
 
-            if (codes[code]) {
-                if (codes[code].used) {
-                    codeMessage.textContent = '❌ Este código ya fue utilizado';
+            // Verificar si el código existe en defaultCodes
+            if (defaultCodes[code]) {
+                if (defaultCodes[code].used || usedCodes[code]) {
+                    codeMessage.innerHTML = '❌ Este código ya fue utilizado';
                     codeMessage.style.color = '#FF6B6B';
                 } else {
-                    const points = codes[code].points;
-                    codes[code].used = true;
+                    const points = defaultCodes[code].points;
+                    defaultCodes[code].used = true;
+                    usedCodes[code] = true;
                     userPoints += points;
                     updatePointsDisplay();
-                    codeMessage.textContent = `✅ ¡Canjeaste ${points} puntos!`;
+                    codeMessage.innerHTML = `✅ ¡Canjeaste ${points} puntos! 🎉`;
                     codeMessage.style.color = '#66C2C2';
                     codeInput.value = '';
-                    // Cerrar después de 1.5s
                     setTimeout(() => {
                         codeModal.classList.remove('active');
                     }, 1500);
                 }
             } else {
-                codeMessage.textContent = '❌ Código incorrecto o inexistente';
+                codeMessage.innerHTML = '❌ Código incorrecto o inexistente';
                 codeMessage.style.color = '#FF6B6B';
             }
         });
@@ -1070,13 +1145,13 @@
             if (userPoints < pet.price) {
                 buyModal.classList.remove('active');
                 // Mostrar alerta de falta de puntos
-                const msg = '❌ Falta de Puntos';
+                const msg = '❌ Falta de Puntos 😢';
                 const alertModal = document.createElement('div');
                 alertModal.className = 'modal-overlay active';
                 alertModal.innerHTML = `
                     <div class="modal-box">
                         <div class="modal-title">⚠️</div>
-                        <div class="modal-message" style="color:#FF6B6B;">${msg}</div>
+                        <div class="modal-message" style="color:#FF6B6B;font-size:1.2rem;">${msg}</div>
                         <div class="modal-actions">
                             <button class="modal-btn confirm" id="alertOkBtn">OK</button>
                         </div>
@@ -1110,15 +1185,17 @@
 
         // ----- LISTA DE ADMIN -----
         function showAdminList(petName) {
-            adminMessage.textContent = `Compra: ${petName} - Elige un admin para completar`;
+            adminMessage.textContent = `🐾 Compra: ${petName} - Elige un admin para completar ✨`;
             adminList.innerHTML = '';
             admins.forEach(admin => {
                 const item = document.createElement('div');
                 item.className = 'admin-item';
-                const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=Hola%20me%20gustar%C3%ADa%20comprar%20${encodeURIComponent(petName)}`;
+                // Mensaje bonito con emojis
+                const mensaje = `🐾 ¡Hola! Me gustaría comprar ${petName} ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖`;
+                const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensaje)}`;
                 item.innerHTML = `
                     <span class="admin-name">${admin.name}</span>
-                    <a href="${waLink}" target="_blank" class="admin-wa">WhatsApp</a>
+                    <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
                 `;
                 adminList.appendChild(item);
             });
@@ -1129,40 +1206,41 @@
             adminModal.classList.remove('active');
         });
 
-        // ----- TABS (solo visual) -----
+        // ----- TABS -----
         document.querySelectorAll('.tab-link').forEach(tab => {
             tab.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = tab.dataset.tab;
+                const catalog = document.getElementById('catalogContainer');
                 if (target === 'pets') {
-                    document.getElementById('catalogContainer').style.display = 'grid';
+                    catalog.style.display = 'grid';
                 } else if (target === 'contact') {
-                    // Mostrar admins directamente
+                    // Mostrar admins directamente con un mensaje de contacto
                     showAdminList('Contacto');
+                    catalog.style.display = 'none';
                 } else if (target === 'codes') {
                     document.getElementById('addPointsBtn').click();
+                    catalog.style.display = 'none';
                 } else if (target === 'group') {
-                    // Grupo: redirigir a grupo de WhatsApp (ejemplo)
-                    window.open('https://chat.whatsapp.com/ejemplo', '_blank');
+                    window.open('https://chat.whatsapp.com/HC3SGJeJVTn2bq7pWRNhWQ', '_blank');
+                    catalog.style.display = 'none';
                 }
-                // Ocultar catálogo si no es pets
                 if (target !== 'pets') {
-                    document.getElementById('catalogContainer').style.display = 'none';
+                    catalog.style.display = 'none';
                 } else {
-                    document.getElementById('catalogContainer').style.display = 'grid';
+                    catalog.style.display = 'grid';
                 }
             });
         });
 
-        // Inicializar
+        // ----- INICIALIZAR -----
+        loadState();
         renderCatalog();
         updatePointsDisplay();
-
-        // Mostrar catálogo por defecto
         document.getElementById('catalogContainer').style.display = 'grid';
 
-        console.log('🐾 POINTS pets - Sistema listo');
-        console.log('Códigos disponibles (todos de un solo uso):', Object.keys(codes));
+        console.log('🐾 POINTS pets - Sistema listo con persistencia');
+        console.log('Códigos disponibles:', Object.keys(defaultCodes).filter(c => !usedCodes[c]));
     </script>
 </body>
 </html>
