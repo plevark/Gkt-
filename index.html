@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>POINTS pets</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <style>
         /* ----- RESET & BASE ----- */
         * {
@@ -86,7 +89,7 @@
             100% { transform: translateY(-20px) rotate(40deg) scale(1.2); }
         }
 
-        /* ---- HEADER (logo + puntos) ---- */
+        /* ---- HEADER ---- */
         .header {
             display: flex;
             justify-content: space-between;
@@ -120,18 +123,12 @@
             text-transform: uppercase;
         }
 
-        .logo span:nth-child(1) { --rot: -4deg;
-            background: #66C2C2; }
-        .logo span:nth-child(2) { --rot: 5deg;
-            background: #49A4A4; }
-        .logo span:nth-child(3) { --rot: -3deg;
-            background: #66C2C2; }
-        .logo span:nth-child(4) { --rot: 6deg;
-            background: #49A4A4; }
-        .logo span:nth-child(5) { --rot: -5deg;
-            background: #66C2C2; }
-        .logo span:nth-child(6) { --rot: 3deg;
-            background: #49A4A4; }
+        .logo span:nth-child(1) { --rot: -4deg; background: #66C2C2; }
+        .logo span:nth-child(2) { --rot: 5deg; background: #49A4A4; }
+        .logo span:nth-child(3) { --rot: -3deg; background: #66C2C2; }
+        .logo span:nth-child(4) { --rot: 6deg; background: #49A4A4; }
+        .logo span:nth-child(5) { --rot: -5deg; background: #66C2C2; }
+        .logo span:nth-child(6) { --rot: 3deg; background: #49A4A4; }
         .logo span:nth-child(7) {
             --rot: -2deg;
             background: transparent !important;
@@ -146,13 +143,9 @@
             transform: rotate(0deg) !important;
             text-transform: lowercase;
         }
-
-        .logo span:nth-child(8) { --rot: 4deg;
-            background: #66C2C2; }
-        .logo span:nth-child(9) { --rot: -2deg;
-            background: #49A4A4; }
-        .logo span:nth-child(10) { --rot: 3deg;
-            background: #66C2C2; }
+        .logo span:nth-child(8) { --rot: 4deg; background: #66C2C2; }
+        .logo span:nth-child(9) { --rot: -2deg; background: #49A4A4; }
+        .logo span:nth-child(10) { --rot: 3deg; background: #66C2C2; }
 
         /* ---- PUNTOS Y BOTÓN + ---- */
         .points-area {
@@ -206,10 +199,7 @@
             background: #49A4A4;
             box-shadow: 0 0 30px rgba(102, 194, 194, 0.5);
         }
-
-        .points-add:active {
-            transform: scale(0.95);
-        }
+        .points-add:active { transform: scale(0.95); }
 
         /* ---- BARRA DE BÚSQUEDA ---- */
         .search-bar {
@@ -315,11 +305,9 @@
             gap: 2px;
             flex-wrap: nowrap;
         }
-
         .nav-list li {
             flex: 0 1 auto;
         }
-
         .nav-list a {
             display: block;
             background: rgba(102, 194, 194, 0.2);
@@ -339,7 +327,6 @@
             transition: all 0.3s ease;
             white-space: nowrap;
         }
-
         .nav-list a:hover {
             background: rgba(102, 194, 194, 0.7);
             color: #1A1A1A;
@@ -373,18 +360,15 @@
             animation: fadeUp 0.6s ease forwards;
             opacity: 0;
         }
-
         .pet-card:hover {
             transform: translateY(-6px) scale(1.02);
             border-color: #66C2C2;
             box-shadow: 0 12px 40px rgba(102, 194, 194, 0.25);
         }
-
         @keyframes fadeUp {
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         .pet-card:nth-child(1) { animation-delay: 0.05s; }
         .pet-card:nth-child(2) { animation-delay: 0.10s; }
         .pet-card:nth-child(3) { animation-delay: 0.15s; }
@@ -407,7 +391,6 @@
             border: 1px solid rgba(102, 194, 194, 0.1);
             transition: all 0.3s ease;
         }
-
         .pet-image img {
             width: 100%;
             height: 100%;
@@ -416,7 +399,6 @@
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
             transition: transform 0.4s ease;
         }
-
         .pet-card:hover .pet-image img {
             transform: scale(1.08);
         }
@@ -430,7 +412,6 @@
             letter-spacing: 0.5px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-
         .pet-price {
             font-family: 'Dancing Script', cursive;
             font-size: 1rem;
@@ -441,7 +422,6 @@
             margin-bottom: 10px;
             border: 1px solid rgba(102, 194, 194, 0.2);
         }
-
         .pet-buy {
             background: rgba(102, 194, 194, 0.2);
             backdrop-filter: blur(4px);
@@ -459,17 +439,13 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .pet-buy:hover {
             background: #66C2C2;
             color: #1A1A1A;
             transform: scale(1.04);
             box-shadow: 0 0 30px rgba(102, 194, 194, 0.3);
         }
-
-        .pet-buy:active {
-            transform: scale(0.95);
-        }
+        .pet-buy:active { transform: scale(0.95); }
 
         .pet-badge {
             font-size: 0.6rem;
@@ -482,7 +458,7 @@
             white-space: nowrap;
         }
 
-        /* ---- BOTÓN WELCOME (fijo) ---- */
+        /* ---- BOTÓN WELCOME ---- */
         .footer-btn {
             display: flex;
             justify-content: center;
@@ -491,7 +467,6 @@
             z-index: 2;
             width: 100%;
         }
-
         .welcome-btn {
             background: rgba(50, 138, 138, 0.6);
             backdrop-filter: blur(8px);
@@ -519,7 +494,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .welcome-btn::before {
             content: '';
             position: absolute;
@@ -532,14 +506,12 @@
             transform: rotate(30deg) scale(0.5);
             animation: shine 4s ease-in-out infinite;
         }
-
         @keyframes shine {
             0% { opacity: 0; transform: rotate(30deg) scale(0.5); }
             20% { opacity: 0.8; transform: rotate(30deg) scale(1.2); }
             40% { opacity: 0; transform: rotate(30deg) scale(1.5); }
             100% { opacity: 0; transform: rotate(30deg) scale(0.5); }
         }
-
         .welcome-btn .sparkle {
             display: inline-block;
             font-size: 2.2rem;
@@ -548,7 +520,6 @@
             filter: drop-shadow(0 0 12px rgba(255, 251, 235, 0.3));
             color: #F5F5F5;
         }
-
         @keyframes sparklePulse {
             0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.8; }
             50% { transform: scale(1.4) rotate(30deg); opacity: 1; }
@@ -571,16 +542,11 @@
             padding: 20px;
             animation: fadeInModal 0.3s ease;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
+        .modal-overlay.active { display: flex; }
         @keyframes fadeInModal {
             0% { opacity: 0; transform: scale(0.9) translateY(20px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-
         .modal-box {
             background: rgba(26, 26, 26, 0.97);
             backdrop-filter: blur(16px);
@@ -594,12 +560,10 @@
             position: relative;
             animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         @keyframes modalPop {
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-
         .modal-title {
             font-family: 'Dancing Script', cursive;
             font-size: 1.8rem;
@@ -608,7 +572,6 @@
             color: #F5F5F5;
             margin-bottom: 16px;
         }
-
         .modal-input {
             width: 100%;
             padding: 12px 18px;
@@ -623,19 +586,16 @@
             transition: all 0.3s ease;
             font-family: 'Courier New', monospace;
         }
-
         .modal-input:focus {
             border-color: #66C2C2;
             box-shadow: 0 0 20px rgba(102, 194, 194, 0.2);
         }
-
         .modal-actions {
             display: flex;
             gap: 12px;
             margin-top: 18px;
             justify-content: center;
         }
-
         .modal-btn {
             padding: 10px 24px;
             border-radius: 60px;
@@ -647,29 +607,24 @@
             transition: all 0.3s ease;
             min-width: 80px;
         }
-
         .modal-btn.confirm {
             background: #66C2C2;
             color: #1A1A1A;
         }
-
         .modal-btn.confirm:hover {
             background: #49A4A4;
             transform: scale(1.05);
             box-shadow: 0 0 30px rgba(102, 194, 194, 0.3);
         }
-
         .modal-btn.cancel {
             background: rgba(255,255,255,0.05);
             color: #F5F5F5;
             border: 1px solid rgba(255,255,255,0.1);
         }
-
         .modal-btn.cancel:hover {
             background: rgba(255,255,255,0.1);
             transform: scale(1.05);
         }
-
         .modal-message {
             text-align: center;
             font-size: 1rem;
@@ -679,7 +634,6 @@
             font-family: 'Dancing Script', cursive;
             line-height: 1.6;
         }
-
         .modal-message a {
             color: #66C2C2;
             text-decoration: none;
@@ -687,7 +641,6 @@
             border-bottom: 1px dotted #66C2C2;
             transition: all 0.3s ease;
         }
-
         .modal-message a:hover {
             color: #49A4A4;
             border-bottom-color: #49A4A4;
@@ -700,7 +653,6 @@
             flex-direction: column;
             gap: 6px;
         }
-
         .admin-item {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(102, 194, 194, 0.1);
@@ -712,18 +664,15 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
         }
-
         .admin-item:hover {
             background: rgba(102, 194, 194, 0.1);
             border-color: #66C2C2;
         }
-
         .admin-name {
             font-weight: 700;
             color: #F5F5F5;
             font-family: 'Dancing Script', cursive;
         }
-
         .admin-wa {
             color: #66C2C2;
             text-decoration: none;
@@ -733,7 +682,6 @@
             border-radius: 30px;
             transition: all 0.3s ease;
         }
-
         .admin-wa:hover {
             background: #66C2C2;
             color: #1A1A1A;
@@ -750,7 +698,6 @@
             font-family: 'Dancing Script', cursive;
             letter-spacing: 1px;
         }
-
         .collab-footer span {
             display: inline-block;
             margin: 0 6px;
@@ -759,47 +706,18 @@
 
         /* ---- RESPONSIVE ---- */
         @media (max-width: 380px) {
-            .logo span {
-                font-size: 1.4rem;
-                padding: 1px 4px;
-            }
-            .nav-list a {
-                font-size: 0.6rem;
-                padding: 4px 8px;
-            }
-            .welcome-btn {
-                font-size: 1.5rem;
-                padding: 10px 16px;
-                gap: 6px;
-                letter-spacing: 4px;
-            }
-            .catalog {
-                gap: 10px;
-            }
-            .pet-name {
-                font-size: 1rem;
-            }
-            .pet-price {
-                font-size: 0.8rem;
-            }
-            .modal-box {
-                padding: 20px 16px;
-            }
+            .logo span { font-size: 1.4rem; padding: 1px 4px; }
+            .nav-list a { font-size: 0.6rem; padding: 4px 8px; }
+            .welcome-btn { font-size: 1.5rem; padding: 10px 16px; gap: 6px; letter-spacing: 4px; }
+            .catalog { gap: 10px; }
+            .pet-name { font-size: 1rem; }
+            .pet-price { font-size: 0.8rem; }
+            .modal-box { padding: 20px 16px; }
         }
-
         @media (min-width: 500px) {
-            .app {
-                max-width: 480px;
-                padding: 24px 24px 28px;
-            }
-            .logo span {
-                font-size: 2.2rem;
-                padding: 4px 10px;
-            }
-            .nav-list a {
-                font-size: 0.95rem;
-                padding: 8px 22px;
-            }
+            .app { max-width: 480px; padding: 24px 24px 28px; }
+            .logo span { font-size: 2.2rem; padding: 4px 10px; }
+            .nav-list a { font-size: 0.95rem; padding: 8px 22px; }
         }
 
         /* ---- FONDOS DECORATIVOS ---- */
@@ -815,7 +733,6 @@
             border-radius: 50%;
             z-index: 0;
         }
-
         .bg-dots2 {
             position: absolute;
             bottom: 15%;
@@ -828,7 +745,6 @@
             border-radius: 50%;
             z-index: 0;
         }
-
         .confetti-bg {
             position: absolute;
             top: 10%;
@@ -839,6 +755,22 @@
             letter-spacing: 12px;
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* ---- LOADING SPINNER ---- */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: #66C2C2;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -857,12 +789,7 @@
         <!-- HEADER -->
         <header class="header">
             <div class="logo">
-                <span>P</span>
-                <span>O</span>
-                <span>I</span>
-                <span>N</span>
-                <span>T</span>
-                <span>S</span>
+                <span>P</span><span>O</span><span>I</span><span>N</span><span>T</span><span>S</span>
                 <span class="pets">pets</span>
             </div>
             <div class="points-area">
@@ -888,7 +815,7 @@
             </ul>
         </nav>
 
-        <!-- CATÁLOGO (PETS) -->
+        <!-- CATÁLOGO -->
         <div id="catalogContainer" class="catalog"></div>
 
         <!-- BOTÓN WELCOME -->
@@ -901,7 +828,7 @@
 
         <!-- FOOTER COLABORADORES -->
         <div class="collab-footer">
-            <span>✦</span> Christine  <span>✦</span> Sofi  <span>✦</span> Exatis  <span>✦</span> Njro  <span>✦</span> Viví  <span>✦</span>
+            <span>✦</span> Christine <span>✦</span> Sofi <span>✦</span> Exatis <span>✦</span> Njro <span>✦</span> Viví <span>✦</span>
         </div>
     </div>
 
@@ -934,7 +861,7 @@
         </div>
     </div>
 
-    <!-- MODAL ADMIN (para contactar) -->
+    <!-- MODAL ADMIN -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-box">
             <div class="modal-title">📱 Contacta con un Admin</div>
@@ -947,7 +874,30 @@
     </div>
 
     <script>
-        // ----- DATOS -----
+        // ----- CONFIGURACIÓN FIREBASE -----
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9Ie-8HqQ4e3X5k7Z9L2s4W1Q8A6T5R3Y",
+            authDomain: "points-pets.firebaseapp.com",
+            projectId: "points-pets",
+            storageBucket: "points-pets.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123def456"
+        };
+
+        // Inicializar Firebase (si no está inicializado)
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            // Habilitar persistencia offline (opcional)
+            db.enablePersistence().catch(err => console.warn('Firestore persistence:', err));
+        } catch (e) {
+            console.warn('Firebase ya inicializado o error:', e);
+            // Si ya está inicializado, usar la instancia existente
+            db = firebase.firestore();
+        }
+
+        // ----- DATOS DE MASCOTAS -----
         const petsData = [
             { id: 1, name: 'Dragón de diamantes', price: 1800, img: 'https://static.wikia.nocookie.net/adoptme/images/6/6b/Drag%C3%B3n_de_diamante.png/revision/latest/scale-to-width/360?cb=20250304082833&path-prefix=es' },
             { id: 2, name: 'Estrella de mar', price: 600, img: 'https://static.wikia.nocookie.net/adoptme/images/e/eb/Estrella_de_mar.png/revision/latest/scale-to-width/360?cb=20260311181817&path-prefix=es' },
@@ -959,15 +909,15 @@
             { id: 8, name: 'Huevo azteca', price: 200, img: 'https://static.wikia.nocookie.net/adoptme/images/d/d8/Huevo_azteca.png/revision/latest/thumbnail/width/360/height/360?cb=20250815155051&path-prefix=es' }
         ];
 
-        // Códigos predeterminados (se cargarán desde localStorage si existen)
+        // Códigos predefinidos (se sincronizan con Firestore)
         const defaultCodes = {
-            '7X9K2M4P': { points: 62, used: false },
-            'L5B1V7N3': { points: 36, used: false },
-            'Q8W4E2R9': { points: 29, used: false },
-            'Z6X3C9V5': { points: 12, used: false },
-            'K7J4H2G9': { points: 5, used: false },
-            'F8D4S2A1': { points: 5, used: false },
-            'GKTCOMUNITY': { points: 9000, used: false }
+            '7X9K2M4P': { points: 62 },
+            'L5B1V7N3': { points: 36 },
+            'Q8W4E2R9': { points: 29 },
+            'Z6X3C9V5': { points: 12 },
+            'K7J4H2G9': { points: 5 },
+            'F8D4S2A1': { points: 5 },
+            'GKTCOMUNITY': { points: 9000 }
         };
 
         // Admins
@@ -984,7 +934,6 @@
 
         // Estado
         let userPoints = 0;
-        let usedCodes = {}; // { code: true }
         let selectedPet = null;
 
         // Elementos DOM
@@ -999,27 +948,40 @@
         const adminMessage = document.getElementById('adminMessage');
         const adminList = document.getElementById('adminList');
 
-        // ----- PERSISTENCIA -----
-        function loadState() {
-            const savedPoints = localStorage.getItem('pointsUser');
-            if (savedPoints !== null) {
-                userPoints = parseInt(savedPoints, 10);
-            }
-            const savedUsedCodes = localStorage.getItem('usedCodes');
-            if (savedUsedCodes) {
-                usedCodes = JSON.parse(savedUsedCodes);
-            }
-            // Sincronizar con defaultCodes para marcar usados
-            for (let code in defaultCodes) {
-                if (usedCodes[code]) {
-                    defaultCodes[code].used = true;
-                }
+        // ----- FUNCIONES DE PERSISTENCIA LOCAL -----
+        function loadLocalPoints() {
+            const saved = localStorage.getItem('pointsUser');
+            if (saved !== null) {
+                userPoints = parseInt(saved, 10);
+            } else {
+                userPoints = 0;
             }
         }
 
-        function saveState() {
+        function saveLocalPoints() {
             localStorage.setItem('pointsUser', userPoints.toString());
-            localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
+        }
+
+        // ----- FUNCIONES FIRESTORE (códigos globales) -----
+        async function isCodeUsed(code) {
+            try {
+                const doc = await db.collection('usedCodes').doc(code).get();
+                return doc.exists && doc.data().used === true;
+            } catch (e) {
+                console.error('Error checking code:', e);
+                // Si falla, asumimos que no está usado (para evitar bloqueos)
+                return false;
+            }
+        }
+
+        async function markCodeUsed(code) {
+            try {
+                await db.collection('usedCodes').doc(code).set({ used: true }, { merge: true });
+                return true;
+            } catch (e) {
+                console.error('Error marking code used:', e);
+                return false;
+            }
         }
 
         // ----- RENDER CATÁLOGO -----
@@ -1028,17 +990,9 @@
             petsData.forEach(pet => {
                 const card = document.createElement('div');
                 card.className = 'pet-card';
-                card.style.animationDelay = `${Math.random() * 0.3}s`;
-
-                let badgeHtml = '';
-                if (pet.badge) {
-                    badgeHtml = `<span class="pet-badge">${pet.badge}</span>`;
-                }
-
+                let badgeHtml = pet.badge ? `<span class="pet-badge">${pet.badge}</span>` : '';
                 card.innerHTML = `
-                    <div class="pet-image">
-                        <img src="${pet.img}" alt="${pet.name}" loading="lazy" />
-                    </div>
+                    <div class="pet-image"><img src="${pet.img}" alt="${pet.name}" loading="lazy" /></div>
                     <div class="pet-name">${pet.name} ${badgeHtml}</div>
                     <div class="pet-price">✦ ${pet.price} pts</div>
                     <button class="pet-buy" data-id="${pet.id}">Comprar 🛒</button>
@@ -1061,10 +1015,10 @@
         // ----- ACTUALIZAR PUNTOS -----
         function updatePointsDisplay() {
             pointsDisplay.textContent = userPoints;
-            saveState();
+            saveLocalPoints();
         }
 
-        // ----- MODAL CÓDIGO -----
+        // ----- MODAL CÓDIGO (con verificación global) -----
         document.getElementById('addPointsBtn').addEventListener('click', () => {
             codeModal.classList.add('active');
             codeInput.value = '';
@@ -1081,7 +1035,7 @@
             codeModal.classList.remove('active');
         });
 
-        document.getElementById('confirmCodeBtn').addEventListener('click', () => {
+        document.getElementById('confirmCodeBtn').addEventListener('click', async () => {
             const code = codeInput.value.trim().toUpperCase();
             if (!code) {
                 codeMessage.innerHTML = '⚠️ Ingresa un código válido';
@@ -1089,31 +1043,42 @@
                 return;
             }
 
-            // Verificar si el código existe en defaultCodes
-            if (defaultCodes[code]) {
-                if (defaultCodes[code].used || usedCodes[code]) {
-                    codeMessage.innerHTML = '❌ Este código ya fue utilizado';
-                    codeMessage.style.color = '#FF6B6B';
-                } else {
-                    const points = defaultCodes[code].points;
-                    defaultCodes[code].used = true;
-                    usedCodes[code] = true;
-                    userPoints += points;
-                    updatePointsDisplay();
-                    codeMessage.innerHTML = `✅ ¡Canjeaste ${points} puntos! 🎉`;
-                    codeMessage.style.color = '#66C2C2';
-                    codeInput.value = '';
-                    setTimeout(() => {
-                        codeModal.classList.remove('active');
-                    }, 1500);
-                }
-            } else {
+            // Verificar si existe en los códigos predefinidos
+            if (!defaultCodes[code]) {
                 codeMessage.innerHTML = '❌ Código incorrecto o inexistente';
                 codeMessage.style.color = '#FF6B6B';
+                return;
             }
+
+            // Verificar en Firestore si ya fue usado globalmente
+            const used = await isCodeUsed(code);
+            if (used) {
+                codeMessage.innerHTML = '❌ Este código ya fue utilizado por otro usuario';
+                codeMessage.style.color = '#FF6B6B';
+                return;
+            }
+
+            // Marcar como usado en Firestore
+            const marked = await markCodeUsed(code);
+            if (!marked) {
+                codeMessage.innerHTML = '⚠️ Error al validar el código, intenta de nuevo';
+                codeMessage.style.color = '#FF6B6B';
+                return;
+            }
+
+            // Sumar puntos
+            const points = defaultCodes[code].points;
+            userPoints += points;
+            updatePointsDisplay();
+            codeMessage.innerHTML = `✅ ¡Canjeaste ${points} puntos! 🎉`;
+            codeMessage.style.color = '#66C2C2';
+            codeInput.value = '';
+            setTimeout(() => {
+                codeModal.classList.remove('active');
+            }, 1500);
         });
 
-        // Cerrar modal con Escape
+        // Cerrar modales con Escape y clic fuera
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 codeModal.classList.remove('active');
@@ -1121,16 +1086,10 @@
                 adminModal.classList.remove('active');
             }
         });
-
-        // Cerrar al hacer clic fuera
-        codeModal.addEventListener('click', (e) => {
-            if (e.target === codeModal) codeModal.classList.remove('active');
-        });
-        buyModal.addEventListener('click', (e) => {
-            if (e.target === buyModal) buyModal.classList.remove('active');
-        });
-        adminModal.addEventListener('click', (e) => {
-            if (e.target === adminModal) adminModal.classList.remove('active');
+        [codeModal, buyModal, adminModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
         });
 
         // ----- CONFIRMACIÓN DE COMPRA -----
@@ -1144,26 +1103,21 @@
             const pet = selectedPet;
             if (userPoints < pet.price) {
                 buyModal.classList.remove('active');
-                // Mostrar alerta de falta de puntos
-                const msg = '❌ Falta de Puntos 😢';
+                // Alerta falta de puntos
                 const alertModal = document.createElement('div');
                 alertModal.className = 'modal-overlay active';
                 alertModal.innerHTML = `
                     <div class="modal-box">
                         <div class="modal-title">⚠️</div>
-                        <div class="modal-message" style="color:#FF6B6B;font-size:1.2rem;">${msg}</div>
+                        <div class="modal-message" style="color:#FF6B6B;font-size:1.2rem;">❌ Falta de Puntos 😢</div>
                         <div class="modal-actions">
                             <button class="modal-btn confirm" id="alertOkBtn">OK</button>
                         </div>
                     </div>
                 `;
                 document.body.appendChild(alertModal);
-                alertModal.querySelector('#alertOkBtn').addEventListener('click', () => {
-                    alertModal.remove();
-                });
-                alertModal.addEventListener('click', (e) => {
-                    if (e.target === alertModal) alertModal.remove();
-                });
+                alertModal.querySelector('#alertOkBtn').addEventListener('click', () => alertModal.remove());
+                alertModal.addEventListener('click', (e) => { if (e.target === alertModal) alertModal.remove(); });
                 selectedPet = null;
                 return;
             }
@@ -1173,8 +1127,8 @@
             updatePointsDisplay();
             buyModal.classList.remove('active');
 
-            // Mostrar lista de admins para contacto
-            showAdminList(pet.name);
+            // Mostrar admins con mensaje mejorado
+            showAdminList(pet.name, pet.price);
             selectedPet = null;
         });
 
@@ -1184,15 +1138,14 @@
         });
 
         // ----- LISTA DE ADMIN -----
-        function showAdminList(petName) {
-            adminMessage.textContent = `🐾 Compra: ${petName} - Elige un admin para completar ✨`;
+        function showAdminList(petName, petPrice) {
+            adminMessage.textContent = `🐾 Compra: ${petName} (${petPrice} pts) - Elige un admin ✨`;
             adminList.innerHTML = '';
+            const mensajeBase = `🐾 ¡Hola! Me gustaría comprar ${petName} por ${petPrice} puntos ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖`;
             admins.forEach(admin => {
                 const item = document.createElement('div');
                 item.className = 'admin-item';
-                // Mensaje bonito con emojis
-                const mensaje = `🐾 ¡Hola! Me gustaría comprar ${petName} ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖`;
-                const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensaje)}`;
+                const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensajeBase)}`;
                 item.innerHTML = `
                     <span class="admin-name">${admin.name}</span>
                     <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
@@ -1215,8 +1168,7 @@
                 if (target === 'pets') {
                     catalog.style.display = 'grid';
                 } else if (target === 'contact') {
-                    // Mostrar admins directamente con un mensaje de contacto
-                    showAdminList('Contacto');
+                    showAdminList('Contacto', '');
                     catalog.style.display = 'none';
                 } else if (target === 'codes') {
                     document.getElementById('addPointsBtn').click();
@@ -1234,13 +1186,13 @@
         });
 
         // ----- INICIALIZAR -----
-        loadState();
+        loadLocalPoints();
         renderCatalog();
         updatePointsDisplay();
         document.getElementById('catalogContainer').style.display = 'grid';
 
-        console.log('🐾 POINTS pets - Sistema listo con persistencia');
-        console.log('Códigos disponibles:', Object.keys(defaultCodes).filter(c => !usedCodes[c]));
+        console.log('🐾 POINTS pets - Sistema con Firebase (códigos globales)');
+        console.log('Códigos disponibles:', Object.keys(defaultCodes));
     </script>
 </body>
 </html>
