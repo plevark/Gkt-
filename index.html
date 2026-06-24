@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,807 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>POINTS pets</title>
     <link rel="icon" href="https://i.ibb.co/nq6GfwTm/logo-points-pets.png" type="image/png" />
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght=700&display=swap" rel="stylesheet" />
     <style>
         /* ----- RESET & BASE ----- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #0D0D0D;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 16px 12px 20px;
-            font-family: 'Dancing Script', 'Arial Black', 'Impact', 'Comic Sans MS', cursive, sans-serif;
-            color: #F5F5F5;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(102, 194, 194, 0.05) 0%, transparent 60%),
-                        radial-gradient(circle at 80% 70%, rgba(50, 138, 138, 0.05) 0%, transparent 60%),
-                        radial-gradient(circle at 50% 50%, rgba(102, 194, 194, 0.02) 0%, transparent 80%);
-            pointer-events: none;
-            z-index: 0;
-            animation: gradientShift 25s ease-in-out infinite alternate;
-        }
-
-        @keyframes gradientShift {
-            0% { opacity: 0.5; transform: scale(1) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.05) rotate(2deg); }
-            100% { opacity: 0.7; transform: scale(0.95) rotate(-2deg); }
-        }
-
-        .app {
-            max-width: 480px;
-            width: 100%;
-            background: rgba(26, 26, 26, 0.72);
-            backdrop-filter: blur(24px) saturate(1.3);
-            -webkit-backdrop-filter: blur(24px) saturate(1.3);
-            border-radius: 30px 30px 20px 20px;
-            padding: 16px 14px 18px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(102, 194, 194, 0.12);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 1;
-        }
-        .app:hover {
-            border-color: rgba(102, 194, 194, 0.25);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7), 0 0 60px rgba(102, 194, 194, 0.03);
-        }
-
-        .app::before {
-            content: '';
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 300px;
-            height: 300px;
-            background-image: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.05) 20%, transparent 20%);
-            background-size: 8px 8px;
-            opacity: 0.5;
-            pointer-events: none;
-            border-radius: 50%;
-            z-index: 0;
-            animation: floatBubble 25s ease-in-out infinite alternate;
-        }
-        .app::after {
-            content: '';
-            position: absolute;
-            bottom: -30px;
-            left: -30px;
-            width: 250px;
-            height: 250px;
-            background-image: radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.04) 20%, transparent 20%);
-            background-size: 10px 10px;
-            opacity: 0.4;
-            pointer-events: none;
-            border-radius: 50%;
-            z-index: 0;
-            animation: floatBubble2 30s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatBubble {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { transform: translate(-40px, 30px) scale(1.3) rotate(15deg); }
-        }
-        @keyframes floatBubble2 {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { transform: translate(30px, -40px) scale(0.7) rotate(-15deg); }
-        }
-
-        .app .glass-reflect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%, rgba(255,255,255,0.01) 100%);
-            z-index: 1;
-        }
-
-        .star {
-            position: absolute;
-            font-size: 1.2rem;
-            color: #66C2C2;
-            opacity: 0.18;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatStar 7s ease-in-out infinite alternate;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0D0D0D; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 16px 12px 20px; font-family: 'Dancing Script', 'Arial Black', 'Impact', 'Comic Sans MS', cursive, sans-serif; color: #F5F5F5; position: relative; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 30%, rgba(102, 194, 194, 0.05) 0%, transparent 60%), radial-gradient(circle at 80% 70%, rgba(50, 138, 138, 0.05) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(102, 194, 194, 0.02) 0%, transparent 80%); pointer-events: none; z-index: 0; animation: gradientShift 25s ease-in-out infinite alternate; }
+        @keyframes gradientShift { 0% { opacity: 0.5; transform: scale(1) rotate(0deg); } 50% { opacity: 1; transform: scale(1.05) rotate(2deg); } 100% { opacity: 0.7; transform: scale(0.95) rotate(-2deg); } }
+        .app { max-width: 480px; width: 100%; background: rgba(26, 26, 26, 0.72); backdrop-filter: blur(24px) saturate(1.3); -webkit-backdrop-filter: blur(24px) saturate(1.3); border-radius: 30px 30px 20px 20px; padding: 16px 14px 18px; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06); border: 1px solid rgba(102, 194, 194, 0.12); transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 1; }
+        .app:hover { border-color: rgba(102, 194, 194, 0.25); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7), 0 0 60px rgba(102, 194, 194, 0.03); }
+        .app::before { content: ''; position: absolute; top: -40px; right: -40px; width: 300px; height: 300px; background-image: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.05) 20%, transparent 20%); background-size: 8px 8px; opacity: 0.5; pointer-events: none; border-radius: 50%; z-index: 0; animation: floatBubble 25s ease-in-out infinite alternate; }
+        .app::after { content: ''; position: absolute; bottom: -30px; left: -30px; width: 250px; height: 250px; background-image: radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.04) 20%, transparent 20%); background-size: 10px 10px; opacity: 0.4; pointer-events: none; border-radius: 50%; z-index: 0; animation: floatBubble2 30s ease-in-out infinite alternate; }
+        @keyframes floatBubble { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 100% { transform: translate(-40px, 30px) scale(1.3) rotate(15deg); } }
+        @keyframes floatBubble2 { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 100% { transform: translate(30px, -40px) scale(0.7) rotate(-15deg); } }
+        .app .glass-reflect { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; border-radius: inherit; background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%, rgba(255,255,255,0.01) 100%); z-index: 1; }
+        .star { position: absolute; font-size: 1.2rem; color: #66C2C2; opacity: 0.18; pointer-events: none; z-index: 0; animation: floatStar 7s ease-in-out infinite alternate; }
         .star:nth-child(1) { top: 8%; left: 5%; animation-delay: 0s; }
         .star:nth-child(2) { top: 15%; right: 10%; animation-delay: 1.2s; font-size: 1.6rem; }
         .star:nth-child(3) { bottom: 20%; left: 8%; animation-delay: 2.4s; }
         .star:nth-child(4) { bottom: 30%; right: 5%; animation-delay: 0.6s; font-size: 1.8rem; }
         .star:nth-child(5) { top: 45%; left: 2%; animation-delay: 1.8s; font-size: 1rem; }
         .star:nth-child(6) { top: 60%; right: 2%; animation-delay: 3s; font-size: 1.4rem; }
-
-        @keyframes floatStar {
-            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.18; }
-            50% { opacity: 0.35; }
-            100% { transform: translateY(-25px) rotate(45deg) scale(1.3); opacity: 0.18; }
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0px;
-        }
-
-        .logo span {
-            display: inline-block;
-            padding: 2px 6px 2px 5px;
-            margin: 0 -1px;
-            background: rgba(102, 194, 194, 0.8);
-            backdrop-filter: blur(4px);
-            color: #1A1A1A;
-            font-weight: 700;
-            font-size: 1.9rem;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            transform: rotate(var(--rot, 0deg));
-            border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%;
-            font-family: 'Dancing Script', cursive;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-        }
-        .logo span:hover {
-            transform: rotate(var(--rot, 0deg)) scale(1.05);
-            background: rgba(102, 194, 194, 0.95);
-        }
-
+        @keyframes floatStar { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.18; } 50% { opacity: 0.35; } 100% { transform: translateY(-25px) rotate(45deg) scale(1.3); opacity: 0.18; } }
+        
+        /* ----- HEADER & POINTS AREA ----- */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; position: relative; z-index: 10; }
+        .logo { display: flex; align-items: center; flex-wrap: wrap; gap: 0px; }
+        .logo span { display: inline-block; padding: 2px 6px 2px 5px; margin: 0 -1px; background: rgba(102, 194, 194, 0.8); backdrop-filter: blur(4px); color: #1A1A1A; font-weight: 700; font-size: 1.9rem; line-height: 1.1; letter-spacing: -1px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); transform: rotate(var(--rot, 0deg)); border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%; font-family: 'Dancing Script', cursive; text-transform: uppercase; transition: all 0.3s ease; }
+        .logo span:hover { transform: rotate(var(--rot, 0deg)) scale(1.05); background: rgba(102, 194, 194, 0.95); }
         .logo span:nth-child(1) { --rot: -4deg; background: rgba(102, 194, 194, 0.8); }
         .logo span:nth-child(2) { --rot: 5deg; background: rgba(73, 164, 164, 0.8); }
         .logo span:nth-child(3) { --rot: -3deg; background: rgba(102, 194, 194, 0.8); }
         .logo span:nth-child(4) { --rot: 6deg; background: rgba(73, 164, 164, 0.8); }
         .logo span:nth-child(5) { --rot: -5deg; background: rgba(102, 194, 194, 0.8); }
         .logo span:nth-child(6) { --rot: 3deg; background: rgba(73, 164, 164, 0.8); }
-        .logo span:nth-child(7) {
-            --rot: -2deg;
-            background: transparent !important;
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            color: #F5F5F5;
-            font-size: 1.4rem;
-            font-family: 'Dancing Script', cursive;
-            padding: 0 2px;
-            font-weight: 700;
-            letter-spacing: 0;
-            transform: rotate(0deg) !important;
-            text-transform: lowercase;
-            text-shadow: 0 0 20px rgba(102, 194, 194, 0.2);
-        }
+        .logo span:nth-child(7) { --rot: -2deg; background: transparent !important; box-shadow: none !important; border-radius: 0 !important; color: #F5F5F5; font-size: 1.4rem; font-family: 'Dancing Script', cursive; padding: 0 2px; font-weight: 700; letter-spacing: 0; transform: rotate(0deg) !important; text-transform: lowercase; text-shadow: 0 0 20px rgba(102, 194, 194, 0.2); }
         .logo span:nth-child(8) { --rot: 4deg; background: rgba(102, 194, 194, 0.8); }
         .logo span:nth-child(9) { --rot: -2deg; background: rgba(73, 164, 164, 0.8); }
         .logo span:nth-child(10) { --rot: 3deg; background: rgba(102, 194, 194, 0.8); }
-
-        .points-area {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 30px;
-            padding: 4px 12px 4px 16px;
-            border: 1px solid rgba(102, 194, 194, 0.2);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .points-area:hover {
-            border-color: #66C2C2;
-            box-shadow: 0 4px 24px rgba(102, 194, 194, 0.15);
-            transform: scale(1.02);
-        }
-
-        .points-number {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #F5F5F5;
-            font-family: 'Dancing Script', cursive;
-            letter-spacing: 1px;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .points-add {
-            background: rgba(102, 194, 194, 0.3);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(102, 194, 194, 0.4);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #F5F5F5;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 20px rgba(102, 194, 194, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Dancing Script', cursive;
-        }
-
-        .points-add:hover {
-            transform: scale(1.15) rotate(90deg);
-            background: #66C2C2;
-            color: #1A1A1A;
-            box-shadow: 0 0 40px rgba(102, 194, 194, 0.4);
-            border-color: #66C2C2;
-        }
+        
+        .points-area { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 30px; padding: 4px 12px 4px 16px; border: 1px solid rgba(102, 194, 194, 0.2); box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: all 0.3s ease; position: relative; }
+        .points-area:hover { border-color: #66C2C2; box-shadow: 0 4px 24px rgba(102, 194, 194, 0.15); transform: scale(1.02); }
+        .points-number { font-size: 1.2rem; font-weight: 700; color: #F5F5F5; font-family: 'Dancing Script', cursive; letter-spacing: 1px; min-width: 30px; text-align: center; cursor: pointer; user-select: none; }
+        .points-add { background: rgba(102, 194, 194, 0.3); backdrop-filter: blur(4px); border: 1px solid rgba(102, 194, 194, 0.4); border-radius: 50%; width: 30px; height: 30px; font-size: 1.5rem; font-weight: 700; color: #F5F5F5; cursor: pointer; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 20px rgba(102, 194, 194, 0.15); display: flex; align-items: center; justify-content: center; font-family: 'Dancing Script', cursive; }
+        .points-add:hover { transform: scale(1.15) rotate(90deg); background: #66C2C2; color: #1A1A1A; box-shadow: 0 0 40px rgba(102, 194, 194, 0.4); border-color: #66C2C2; }
         .points-add:active { transform: scale(0.9); }
+        
+        /* ----- DROPDOWN CORREGIDO ----- */
+        .plus-dropdown { position: absolute; top: 44px; right: 0; background: rgba(22, 22, 22, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(102, 194, 194, 0.4); border-radius: 16px; padding: 6px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 12px 35px rgba(0,0,0,0.7); z-index: 999999 !important; min-width: 160px; animation: fadeInDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .plus-dropdown.active { display: flex; }
+        .plus-dropdown-item { font-family: 'Dancing Script', cursive; font-size: 1rem; color: #F5F5F5; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-align: left; background: transparent; border: none; width: 100%; }
+        .plus-dropdown-item:hover { background: rgba(102, 194, 194, 0.2); color: #66C2C2; padding-left: 16px; }
+        .plus-dropdown-item.cancel-opt { color: #ff6b6b; }
+        .plus-dropdown-item.cancel-opt:hover { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .search-bar {
-            background: rgba(50, 138, 138, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 60px;
-            padding: 10px 18px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(102, 194, 194, 0.2);
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-        .search-bar:hover {
-            border-color: #66C2C2;
-            box-shadow: 0 4px 20px rgba(102, 194, 194, 0.1);
-        }
+        .search-bar { background: rgba(50, 138, 138, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 60px; padding: 10px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); border: 1px solid rgba(102, 194, 194, 0.2); overflow: hidden; transition: all 0.4s ease; }
+        .search-bar:hover { border-color: #66C2C2; box-shadow: 0 4px 20px rgba(102, 194, 194, 0.1); }
+        .search-bar .confetti { position: absolute; top: 4px; left: 12px; font-size: 0.6rem; opacity: 0.15; pointer-events: none; color: #F5F5F5; letter-spacing: 10px; white-space: nowrap; font-weight: 100; animation: confettiMove 10s linear infinite; }
+        .search-bar .confetti span { display: inline-block; }
+        @keyframes confettiMove { 0% { transform: translateX(0); } 100% { transform: translateX(-100px); } }
+        .search-bar input { background: transparent; border: none; color: #F5F5F5; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.5px; flex: 1; font-family: 'Dancing Script', cursive; text-transform: lowercase; outline: none; padding: 0 8px; }
+        .search-bar input::placeholder { color: rgba(255,255,255,0.4); font-family: 'Dancing Script', cursive; }
+        .search-bar .lupa { background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #66C2C2; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); border: 1px solid rgba(73, 164, 164, 0.2); transition: all 0.3s ease; cursor: pointer; }
+        .search-bar .lupa:hover { background: #66C2C2; color: #1A1A1A; border-color: #66C2C2; transform: scale(1.05) rotate(10deg); }
+        
+        .nav-tabs { background: rgba(73, 164, 164, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 60px; padding: 8px 6px; margin-bottom: 18px; position: relative; z-index: 2; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); border: 1px solid rgba(102, 194, 194, 0.2); transition: all 0.3s ease; }
+        .nav-tabs:hover { border-color: rgba(102, 194, 194, 0.4); }
+        .nav-list { display: flex; justify-content: space-around; align-items: center; list-style: none; gap: 1px; flex-wrap: nowrap; }
+        .nav-list li { flex: 1; text-align: center; }
+        .nav-list a { display: block; background: rgba(102, 194, 194, 0.15); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); color: #F5F5F5; padding: 6px 8px; border-radius: 40px; font-weight: 700; font-size: 0.8rem; text-decoration: none; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); border: 1px solid rgba(73, 164, 164, 0.15); font-family: 'Dancing Script', cursive; text-transform: lowercase; letter-spacing: 0.5px; transition: all 0.3s ease; white-space: nowrap; margin: 0 2px; }
+        .nav-list a:hover, .nav-list a.active { background: rgba(102, 194, 194, 0.6); color: #1A1A1A; transform: scale(1.03) translateY(-1px); box-shadow: 0 4px 20px rgba(102, 194, 194, 0.2); }
+        .nav-list a:active { transform: scale(0.95); }
+        
+        .catalog { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0 20px; position: relative; z-index: 2; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .catalog.hidden { display: none; }
+        
+        /* CSS Sección Códigos */
+        .codes-section { display: none; flex-direction: column; gap: 16px; margin: 16px 0 20px; position: relative; z-index: 2; animation: fadeUp 0.5s ease forwards; }
+        .codes-section.active { display: flex; }
+        .code-box-container { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); border-radius: 24px; padding: 20px 16px; border: 1px solid rgba(102, 194, 194, 0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.4); text-align: center; }
+        .code-input-wrapper { display: flex; background: rgba(0,0,0,0.4); border-radius: 50px; padding: 4px 6px; border: 1px solid rgba(102, 194, 194, 0.2); margin-top: 12px; align-items: center; }
+        .code-input-wrapper input { background: transparent; border: none; outline: none; color: #FFF; font-family: 'Dancing Script', cursive; font-size: 1.2rem; text-align: center; flex: 1; padding: 6px; letter-spacing: 2px; }
+        .code-input-wrapper input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 0; }
+        .btn-redeem { background: #66C2C2; color: #1A1A1A; border: none; font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; padding: 8px 20px; border-radius: 40px; cursor: pointer; transition: all 0.3s; }
+        .btn-redeem:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(102, 194, 194, 0.4); }
+        .admin-promo-card { background: linear-gradient(135deg, rgba(102,194,194,0.1) 0%, rgba(255,215,0,0.05) 100%); border: 1px solid rgba(255,215,0,0.2); border-radius: 24px; padding: 18px; text-align: center; position: relative; overflow: hidden; }
+        .admin-promo-title { font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: #FFD700; font-weight: 700; margin-bottom: 4px; }
+        .admin-promo-desc { font-size: 0.9rem; color: rgba(255,255,255,0.7); font-family: 'Dancing Script', cursive; margin-bottom: 12px; }
 
-        .search-bar .confetti {
-            position: absolute;
-            top: 4px;
-            left: 12px;
-            font-size: 0.6rem;
-            opacity: 0.15;
-            pointer-events: none;
-            color: #F5F5F5;
-            letter-spacing: 10px;
-            white-space: nowrap;
-            font-weight: 100;
-            animation: confettiMove 10s linear infinite;
-        }
-        .search-bar .confetti span {
-            display: inline-block;
-        }
-        @keyframes confettiMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100px); }
-        }
-
-        .search-bar input {
-            background: transparent;
-            border: none;
-            color: #F5F5F5;
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            flex: 1;
-            font-family: 'Dancing Script', cursive;
-            text-transform: lowercase;
-            outline: none;
-            padding: 0 8px;
-        }
-        .search-bar input::placeholder {
-            color: rgba(255,255,255,0.4);
-            font-family: 'Dancing Script', cursive;
-        }
-
-        .search-bar .lupa {
-            background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #66C2C2;
-            font-size: 1.1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(73, 164, 164, 0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .search-bar .lupa:hover {
-            background: #66C2C2;
-            color: #1A1A1A;
-            border-color: #66C2C2;
-            transform: scale(1.05) rotate(10deg);
-        }
-
-        .nav-tabs {
-            background: rgba(73, 164, 164, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 60px;
-            padding: 8px 12px;
-            margin-bottom: 18px;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(102, 194, 194, 0.2);
-            transition: all 0.3s ease;
-        }
-        .nav-tabs:hover {
-            border-color: rgba(102, 194, 194, 0.4);
-        }
-
-        .nav-list {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            list-style: none;
-            gap: 2px;
-            flex-wrap: nowrap;
-        }
-        .nav-list li {
-            flex: 0 1 auto;
-        }
-        .nav-list a {
-            display: block;
-            background: rgba(102, 194, 194, 0.15);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            color: #F5F5F5;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(73, 164, 164, 0.15);
-            font-family: 'Dancing Script', cursive;
-            text-transform: lowercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        .nav-list a:hover {
-            background: rgba(102, 194, 194, 0.6);
-            color: #1A1A1A;
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 4px 20px rgba(102, 194, 194, 0.2);
-        }
-        .nav-list a:active {
-            transform: scale(0.95);
-        }
-
-        .catalog {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 16px 0 20px;
-            position: relative;
-            z-index: 2;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .catalog.hidden {
-            display: none;
-        }
-
-        .pet-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 12px 10px;
-            border: 1px solid rgba(102, 194, 194, 0.1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            animation: fadeUp 0.7s ease forwards;
-            opacity: 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .pet-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 40%, rgba(102, 194, 194, 0.03) 0%, transparent 60%);
-            pointer-events: none;
-            transition: all 0.6s ease;
-        }
-        .pet-card:hover::before {
-            transform: scale(1.2);
-            opacity: 0.5;
-        }
-        .pet-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: #66C2C2;
-            box-shadow: 0 16px 48px rgba(102, 194, 194, 0.15), 0 0 60px rgba(102, 194, 194, 0.05);
-        }
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .pet-card:nth-child(1) { animation-delay: 0.05s; }
-        .pet-card:nth-child(2) { animation-delay: 0.10s; }
-        .pet-card:nth-child(3) { animation-delay: 0.15s; }
-        .pet-card:nth-child(4) { animation-delay: 0.20s; }
-        .pet-card:nth-child(5) { animation-delay: 0.25s; }
-        .pet-card:nth-child(6) { animation-delay: 0.30s; }
-        .pet-card:nth-child(7) { animation-delay: 0.35s; }
-        .pet-card:nth-child(8) { animation-delay: 0.40s; }
-        .pet-card:nth-child(9) { animation-delay: 0.45s; }
-        .pet-card:nth-child(10) { animation-delay: 0.50s; }
-        .pet-card:nth-child(11) { animation-delay: 0.55s; }
-        .pet-card:nth-child(12) { animation-delay: 0.60s; }
-        .pet-card:nth-child(13) { animation-delay: 0.65s; }
-        .pet-card:nth-child(14) { animation-delay: 0.70s; }
-        .pet-card:nth-child(15) { animation-delay: 0.75s; }
-
-        .pet-image {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: rgba(60, 60, 60, 0.4);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-bottom: 8px;
-            border: 1px solid rgba(102, 194, 194, 0.08);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        .pet-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 6px;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .pet-card:hover .pet-image img {
-            transform: scale(1.1) rotate(-3deg);
-        }
-
-        .pet-badge-quantity {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(255, 215, 0, 0.2);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 215, 0, 0.25);
-            border-radius: 30px;
-            padding: 0px 10px;
-            font-size: 0.7rem;
-            color: #FFD700;
-            font-weight: 700;
-            font-family: 'Dancing Script', cursive;
-        }
-
-        .pet-name {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #F5F5F5;
-            margin-bottom: 2px;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-        .pet-price {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1rem;
-            color: #66C2C2;
-            background: rgba(0,0,0,0.3);
-            padding: 2px 14px;
-            border-radius: 30px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(102, 194, 194, 0.15);
-            backdrop-filter: blur(4px);
-        }
-        .pet-buy {
-            background: rgba(102, 194, 194, 0.15);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(102, 194, 194, 0.3);
-            border-radius: 40px;
-            padding: 6px 18px;
-            font-family: 'Dancing Script', cursive;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #F5F5F5;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .pet-buy:hover {
-            background: #66C2C2;
-            color: #1A1A1A;
-            transform: scale(1.04);
-            box-shadow: 0 0 30px rgba(102, 194, 194, 0.2);
-        }
+        .pet-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 18px; padding: 12px 10px 14px; border: 1px solid rgba(102, 194, 194, 0.1); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; align-items: center; text-align: center; animation: fadeUp 0.6s ease forwards; opacity: 0; position: relative; overflow: hidden; }
+        .pet-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%, rgba(102, 194, 194, 0.04) 0%, transparent 60%); pointer-events: none; transition: all 0.6s ease; }
+        .pet-card:hover::before { transform: scale(1.2); opacity: 0.6; }
+        .pet-card:hover { transform: translateY(-6px) scale(1.02); border-color: #66C2C2; box-shadow: 0 12px 40px rgba(102, 194, 194, 0.15); }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        .pet-image { width: 100%; aspect-ratio: 1/1; background: rgba(60, 60, 60, 0.4); border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 8px; border: 1px solid rgba(102, 194, 194, 0.08); transition: all 0.4s ease; position: relative; }
+        .pet-image img { width: 100%; height: 100%; object-fit: contain; padding: 6px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .pet-card:hover .pet-image img { transform: scale(1.08) rotate(-2deg); }
+        .pet-badge-quantity { position: absolute; top: 6px; right: 6px; background: rgba(255, 215, 0, 0.2); backdrop-filter: blur(4px); border: 1px solid rgba(255, 215, 0, 0.25); border-radius: 30px; padding: 0px 10px; font-size: 0.7rem; color: #FFD700; font-weight: 700; font-family: 'Dancing Script', cursive; }
+        .pet-name { font-family: 'Dancing Script', cursive; font-size: 1.1rem; font-weight: 700; color: #F5F5F5; margin-bottom: 2px; letter-spacing: 0.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); line-height: 1.3; min-height: 2.6rem; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px; }
+        .pet-price { font-family: 'Dancing Script', cursive; font-size: 0.95rem; color: #66C2C2; background: rgba(0,0,0,0.3); padding: 2px 14px; border-radius: 30px; margin-bottom: 8px; border: 1px solid rgba(102, 194, 194, 0.15); backdrop-filter: blur(4px); display: inline-block; }
+        .pet-buy { background: rgba(102, 194, 194, 0.15); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid rgba(102, 194, 194, 0.3); border-radius: 40px; padding: 6px 14px; font-family: 'Dancing Script', cursive; font-weight: 700; font-size: 0.95rem; color: #F5F5F5; cursor: pointer; transition: all 0.3s ease; width: 100%; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .pet-buy:hover { background: #66C2C2; color: #1A1A1A; transform: scale(1.04); box-shadow: 0 0 30px rgba(102, 194, 194, 0.2); }
         .pet-buy:active { transform: scale(0.95); }
-
-        .pet-badge {
-            font-size: 0.6rem;
-            background: rgba(255, 215, 0, 0.15);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 30px;
-            padding: 0px 8px;
-            color: #FFD700;
-            margin-left: 4px;
-            white-space: nowrap;
-        }
-
-        .footer-btn {
-            display: flex;
-            justify-content: center;
-            margin: 8px 0 12px;
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-        .welcome-btn {
-            background: rgba(50, 138, 138, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 2px solid rgba(102, 194, 194, 0.3);
-            border-radius: 80px;
-            padding: 12px 20px;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #F5F5F5;
-            font-family: 'Dancing Script', cursive;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            transform: scaleY(0.85) scaleX(1.1);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: default;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        .welcome-btn:hover {
-            transform: scaleY(0.88) scaleX(1.13);
-            border-color: #66C2C2;
-            box-shadow: 0 8px 30px rgba(102, 194, 194, 0.15);
-        }
-        .welcome-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, transparent 60%);
-            opacity: 0;
-            transform: rotate(30deg) scale(0.5);
-            animation: shine 5s ease-in-out infinite;
-        }
-        @keyframes shine {
-            0% { opacity: 0; transform: rotate(30deg) scale(0.5); }
-            20% { opacity: 0.8; transform: rotate(30deg) scale(1.2); }
-            40% { opacity: 0; transform: rotate(30deg) scale(1.5); }
-            100% { opacity: 0; transform: rotate(30deg) scale(0.5); }
-        }
-        .welcome-btn .sparkle {
-            display: inline-block;
-            font-size: 2.2rem;
-            line-height: 1;
-            animation: sparklePulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 12px rgba(255, 251, 235, 0.2));
-            color: #F5F5F5;
-        }
-        @keyframes sparklePulse {
-            0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.7; }
-            50% { transform: scale(1.4) rotate(30deg); opacity: 1; }
-        }
-
-        /* ---- MODALES CON ANIMACIONES DE ENTRADA Y SALIDA ---- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-        .modal-overlay.closing {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .modal-box {
-            background: rgba(26, 26, 26, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 28px 24px;
-            max-width: 400px;
-            width: 100%;
-            border: 1px solid rgba(102, 194, 194, 0.2);
-            box-shadow: 0 24px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
-            position: relative;
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .modal-overlay.active .modal-box {
-            transform: scale(1) translateY(0);
-        }
-        .modal-overlay.closing .modal-box {
-            transform: scale(0.9) translateY(20px);
-        }
-
-        .modal-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-align: center;
-            color: #F5F5F5;
-            margin-bottom: 16px;
-            text-shadow: 0 0 30px rgba(102, 194, 194, 0.1);
-        }
-        .modal-input {
-            width: 100%;
-            padding: 12px 18px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(102, 194, 194, 0.2);
-            border-radius: 60px;
-            color: #F5F5F5;
-            font-size: 1.2rem;
-            text-align: center;
-            letter-spacing: 3px;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
-        .modal-input:focus {
-            border-color: #66C2C2;
-            box-shadow: 0 0 30px rgba(102, 194, 194, 0.15);
-        }
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 18px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .modal-btn {
-            padding: 10px 24px;
-            border-radius: 60px;
-            border: none;
-            font-family: 'Dancing Script', cursive;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 80px;
-            flex: 1;
-        }
-        .modal-btn.confirm {
-            background: rgba(102, 194, 194, 0.3);
-            backdrop-filter: blur(4px);
-            color: #F5F5F5;
-            border: 1px solid rgba(102, 194, 194, 0.3);
-        }
-        .modal-btn.confirm:hover {
-            background: #66C2C2;
-            color: #1A1A1A;
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(102, 194, 194, 0.2);
-        }
-        .modal-btn.cancel {
-            background: rgba(255,255,255,0.05);
-            color: #F5F5F5;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .modal-btn.cancel:hover {
-            background: rgba(255,255,255,0.12);
-            transform: scale(1.05);
-        }
-
-        .modal-message {
-            text-align: center;
-            font-size: 1rem;
-            color: #F5F5F5;
-            margin: 12px 0;
-            opacity: 0.8;
-            font-family: 'Dancing Script', cursive;
-            line-height: 1.6;
-        }
-        .modal-message a {
-            color: #66C2C2;
-            text-decoration: none;
-            font-weight: 700;
-            border-bottom: 1px dotted rgba(102, 194, 194, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .modal-message a:hover {
-            color: #49A4A4;
-            border-bottom-color: #49A4A4;
-        }
-
-        .admin-list {
-            margin-top: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .admin-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(102, 194, 194, 0.08);
-            border-radius: 40px;
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            animation: slideInItem 0.3s ease forwards;
-            opacity: 0;
-            transform: translateX(-10px);
-        }
+        .pet-badge { font-size: 0.6rem; background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 30px; padding: 0px 8px; color: #FFD700; white-space: nowrap; display: inline-block; }
+        
+        .footer-btn { display: flex; justify-content: center; margin: 8px 0 12px; position: relative; z-index: 2; width: 100%; }
+        .welcome-btn { background: rgba(50, 138, 138, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 2px solid rgba(102, 194, 194, 0.3); border-radius: 80px; padding: 12px 20px; font-size: 2rem; font-weight: 700; color: #F5F5F5; font-family: 'Dancing Script', cursive; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); display: inline-flex; align-items: center; justify-content: center; gap: 12px; letter-spacing: 6px; text-transform: uppercase; transform: scaleY(0.85) scaleX(1.1); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: default; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); width: 100%; max-width: 100%; position: relative; overflow: hidden; }
+        .welcome-btn:hover { transform: scaleY(0.88) scaleX(1.13); border-color: #66C2C2; box-shadow: 0 8px 30px rgba(102, 194, 194, 0.15); }
+        .welcome-btn::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, transparent 60%); opacity: 0; transform: rotate(30deg) scale(0.5); animation: shine 5s ease-in-out infinite; }
+        @keyframes shine { 0% { opacity: 0; transform: rotate(30deg) scale(0.5); } 20% { opacity: 0.8; transform: rotate(30deg) scale(1.2); } 40% { opacity: 0; transform: rotate(30deg) scale(1.5); } 100% { opacity: 0; transform: rotate(30deg) scale(0.5); } }
+        .welcome-btn .sparkle { display: inline-block; font-size: 2.2rem; line-height: 1; animation: sparklePulse 2s ease-in-out infinite; filter: drop-shadow(0 0 12px rgba(255, 251, 235, 0.2)); color: #F5F5F5; }
+        @keyframes sparklePulse { 0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.7; } 50% { transform: scale(1.4) rotate(30deg); opacity: 1; } }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; opacity: 0; transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.closing { opacity: 0; pointer-events: none; }
+        .modal-box { background: rgba(26, 26, 26, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 30px; padding: 28px 24px; max-width: 400px; width: 100%; border: 1px solid rgba(102, 194, 194, 0.2); box-shadow: 0 24px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05); position: relative; transform: scale(0.88) translateY(30px); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
+        .modal-overlay.closing .modal-box { transform: scale(0.88) translateY(30px); }
+        .modal-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; font-weight: 700; text-align: center; color: #F5F5F5; margin-bottom: 16px; text-shadow: 0 0 30px rgba(102, 194, 194, 0.1); }
+        .modal-actions { display: flex; gap: 12px; margin-top: 18px; justify-content: center; flex-wrap: wrap; width: 100%; }
+        .modal-btn { padding: 10px 24px; border-radius: 60px; border: none; font-family: 'Dancing Script', cursive; font-weight: 700; font-size: 1.2rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); min-width: 80px; flex: 1; text-align: center; }
+        .modal-btn.confirm { background: rgba(102, 194, 194, 0.3); backdrop-filter: blur(4px); color: #F5F5F5; border: 1px solid rgba(102, 194, 194, 0.3); }
+        .modal-btn.confirm:hover { background: #66C2C2; color: #1A1A1A; transform: scale(1.05); box-shadow: 0 0 30px rgba(102, 194, 194, 0.2); }
+        .modal-btn.claim-btn { background: rgba(255, 215, 0, 0.2); backdrop-filter: blur(4px); color: #FFD700; border: 1px solid rgba(255, 215, 0, 0.3); animation: pulseClaim 2.5s ease-in-out infinite; }
+        .modal-btn.claim-btn:hover { background: #FFD700; color: #1A1A1A; transform: scale(1.05); border-color: #FFD700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
+        @keyframes pulseClaim { 0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.1); } 50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.3); border-color: rgba(255, 215, 0, 0.6); } }
+        .modal-btn.cancel { background: rgba(255,255,255,0.05); color: #F5F5F5; border: 1px solid rgba(255,255,255,0.08); }
+        .modal-btn.cancel:hover { background: rgba(255,255,255,0.12); transform: scale(1.05); }
+        .modal-message { text-align: center; font-size: 1rem; color: #F5F5F5; margin: 12px 0; opacity: 0.8; font-family: 'Dancing Script', cursive; line-height: 1.6; }
+        
+        .admin-list { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto; padding-right: 4px; }
+        .admin-list::-webkit-scrollbar { width: 4px; }
+        .admin-list::-webkit-scrollbar-thumb { background: rgba(102, 194, 194, 0.3); border-radius: 10px; }
+        
+        .admin-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(102, 194, 194, 0.08); border-radius: 40px; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; font-size: 0.9rem; animation: slideInItem 0.3s ease forwards; opacity: 0; transform: translateX(-10px); }
         .admin-item:nth-child(1) { animation-delay: 0.05s; }
         .admin-item:nth-child(2) { animation-delay: 0.10s; }
         .admin-item:nth-child(3) { animation-delay: 0.15s; }
@@ -815,154 +150,26 @@
         .admin-item:nth-child(6) { animation-delay: 0.30s; }
         .admin-item:nth-child(7) { animation-delay: 0.35s; }
         .admin-item:nth-child(8) { animation-delay: 0.40s; }
-
-        @keyframes slideInItem {
-            0% { opacity: 0; transform: translateX(-10px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-
-        .admin-item:hover {
-            background: rgba(102, 194, 194, 0.08);
-            border-color: rgba(102, 194, 194, 0.3);
-            transform: scale(1.02);
-        }
-        .admin-name {
-            font-weight: 700;
-            color: #F5F5F5;
-            font-family: 'Dancing Script', cursive;
-        }
-        .admin-wa {
-            color: #66C2C2;
-            text-decoration: none;
-            font-size: 0.8rem;
-            background: rgba(102, 194, 194, 0.12);
-            padding: 2px 14px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-        }
-        .admin-wa:hover {
-            background: #66C2C2;
-            color: #1A1A1A;
-            transform: scale(1.05);
-        }
-
-        .collab-footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.2);
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            font-family: 'Dancing Script', cursive;
-            letter-spacing: 1px;
-        }
-        .collab-footer span {
-            display: inline-block;
-            margin: 0 6px;
-            color: rgba(102, 194, 194, 0.3);
-            animation: pulseText 3s ease-in-out infinite;
-        }
-        @keyframes pulseText {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-        }
-
-        @media (max-width: 380px) {
-            .logo span { font-size: 1.4rem; padding: 1px 4px; }
-            .nav-list a { font-size: 0.6rem; padding: 4px 8px; }
-            .welcome-btn { font-size: 1.5rem; padding: 10px 16px; gap: 6px; letter-spacing: 4px; }
-            .catalog { gap: 10px; }
-            .pet-name { font-size: 1rem; }
-            .pet-price { font-size: 0.8rem; }
-            .modal-box { padding: 20px 16px; }
-        }
-
-        @media (min-width: 768px) {
-            .app { max-width: 700px; padding: 24px 24px 28px; }
-            .catalog { grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
-        }
-
-        @media (min-width: 1024px) {
-            .app { max-width: 1000px; padding: 30px 30px 34px; }
-            .catalog { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 20px; }
-            .pet-card { padding: 16px 14px; }
-            .pet-name { font-size: 1.4rem; }
-            .pet-price { font-size: 1.1rem; }
-            .pet-buy { font-size: 1.1rem; padding: 8px 20px; }
-        }
-
-        @media (min-width: 1400px) {
-            .app { max-width: 1200px; }
-            .catalog { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 24px; }
-        }
-
-        .bg-dots {
-            position: absolute;
-            top: 25%;
-            left: 5%;
-            width: 120px;
-            height: 120px;
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 20%, transparent 20%);
-            background-size: 10px 10px;
-            pointer-events: none;
-            border-radius: 50%;
-            z-index: 0;
-            animation: floatDots 15s ease-in-out infinite alternate;
-        }
-        .bg-dots2 {
-            position: absolute;
-            bottom: 15%;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 20%, transparent 20%);
-            background-size: 8px 8px;
-            pointer-events: none;
-            border-radius: 50%;
-            z-index: 0;
-            animation: floatDots2 18s ease-in-out infinite alternate;
-        }
-        @keyframes floatDots {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-20px, 15px) scale(1.1); }
-        }
-        @keyframes floatDots2 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(15px, -20px) scale(0.9); }
-        }
-
-        .confetti-bg {
-            position: absolute;
-            top: 10%;
-            right: 8%;
-            font-size: 1.2rem;
-            color: #66C2C2;
-            opacity: 0.06;
-            letter-spacing: 12px;
-            pointer-events: none;
-            z-index: 0;
-            animation: confettiFloat 20s linear infinite;
-        }
-        @keyframes confettiFloat {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-top-color: #66C2C2;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes slideInItem { 0% { opacity: 0; transform: translateX(-10px); } 100% { opacity: 1; transform: translateX(0); } }
+        .admin-item:hover { background: rgba(102, 194, 194, 0.08); border-color: rgba(102, 194, 194, 0.3); transform: scale(1.02); }
+        .admin-name { font-weight: 700; color: #F5F5F5; font-family: 'Dancing Script', cursive; }
+        .admin-wa { color: #66C2C2; text-decoration: none; font-size: 0.8rem; background: rgba(102, 194, 194, 0.12); padding: 2px 14px; border-radius: 30px; transition: all 0.3s ease; }
+        .admin-wa:hover { background: #66C2C2; color: #1A1A1A; transform: scale(1.05); }
+        
+        .collab-footer { text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.2); margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.04); font-family: 'Dancing Script', cursive; letter-spacing: 1px; }
+        .collab-footer span { display: inline-block; margin: 0 6px; color: rgba(102, 194, 194, 0.3); animation: pulseText 3s ease-in-out infinite; }
+        @keyframes pulseText { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+        
+        @media (max-width: 380px) { .logo span { font-size: 1.4rem; padding: 1px 4px; } .nav-list a { font-size: 0.65rem; padding: 4px 4px; margin: 0 1px; } .welcome-btn { font-size: 1.5rem; padding: 10px 16px; gap: 6px; letter-spacing: 4px; } .catalog { gap: 10px; } .pet-name { font-size: 1rem; } .pet-price { font-size: 0.85rem; } .modal-box { padding: 20px 16px; } .modal-actions { flex-direction: column; gap: 8px; } }
+        @media (min-width: 768px) { .app { max-width: 700px; padding: 24px 24px 28px; } .catalog { grid-template-columns: 1fr 1fr 1fr; gap: 18px; } }
+        @media (min-width: 1024px) { .app { max-width: 1000px; padding: 30px 30px 34px; } .catalog { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 20px; } .pet-card { padding: 16px 14px; } .pet-name { font-size: 1.3rem; } .pet-price { font-size: 1.05rem; } .pet-buy { font-size: 1.05rem; padding: 8px 16px; } }
+        @media (min-width: 1400px) { .app { max-width: 1200px; } .catalog { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 24px; } }
+        .bg-dots { position: absolute; top: 25%; left: 5%; width: 120px; height: 120px; background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 20%, transparent 20%); background-size: 10px 10px; pointer-events: none; border-radius: 50%; z-index: 0; animation: floatDots 15s ease-in-out infinite alternate; }
+        .bg-dots2 { position: absolute; bottom: 15%; right: 0; width: 100px; height: 100px; background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 20%, transparent 20%); background-size: 8px 8px; pointer-events: none; border-radius: 50%; z-index: 0; animation: floatDots2 18s ease-in-out infinite alternate; }
+        @keyframes floatDots { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-20px, 15px) scale(1.1); } }
+        @keyframes floatDots2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(15px, -20px) scale(0.9); } }
+        .confetti-bg { position: absolute; top: 10%; right: 8%; font-size: 1.2rem; color: #66C2C2; opacity: 0.06; letter-spacing: 12px; pointer-events: none; z-index: 0; animation: confettiFloat 20s linear infinite; }
+        @keyframes confettiFloat { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(180deg); } 100% { transform: translateY(0) rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -974,7 +181,6 @@
         <div class="star">✧</div>
         <div class="star">✦</div>
         <div class="star">✧</div>
-
         <div class="bg-dots"></div>
         <div class="bg-dots2"></div>
         <div class="confetti-bg">✦ ✧ ✦ ✧</div>
@@ -987,10 +193,15 @@
             <div class="points-area" id="pointsArea">
                 <span class="points-number" id="pointsDisplay">0</span>
                 <button class="points-add" id="addPointsBtn" title="Opciones">+</button>
+                <div class="plus-dropdown" id="plusDropdown">
+                    <button class="plus-dropdown-item" id="optBuyPoints">💳 Comprar puntos</button>
+                    <button class="plus-dropdown-item" id="optRedeemCode">🎁 Canjear código</button>
+                    <button class="plus-dropdown-item cancel-opt" id="optCancel">❌ Cancelar</button>
+                </div>
             </div>
         </header>
 
-        <div class="search-bar">
+        <div class="search-bar" id="appSearchBar">
             <div class="confetti"><span>✦ ✧ ✦ ✧ ✦</span></div>
             <input type="text" id="searchInput" placeholder="buscar..." />
             <div class="lupa" id="searchBtn">🔍</div>
@@ -998,14 +209,31 @@
 
         <nav class="nav-tabs">
             <ul class="nav-list">
-                <li><a href="#" class="tab-link" data-tab="pets">Pets</a></li>
+                <li><a href="#" class="tab-link active" data-tab="pets">Pets</a></li>
+                <li><a href="#" class="tab-link" data-tab="codes">Códigos</a></li>
                 <li><a href="#" class="tab-link" data-tab="contact">Contacto</a></li>
                 <li><a href="#" class="tab-link" data-tab="group">Grupo</a></li>
-                <li><a href="#" class="tab-link" data-tab="codes">Codes</a></li>
             </ul>
         </nav>
 
         <div id="catalogContainer" class="catalog"></div>
+
+        <div id="codesContainer" class="codes-section">
+            <div class="code-box-container">
+                <h3 style="font-family:'Dancing Script', cursive; font-size:1.6rem; color:#66C2C2;">🎟️ Canjear Código Promocional 🎟️</h3>
+                <p style="font-size:0.95rem; opacity:0.8; font-family:'Dancing Script', cursive; margin-top:4px;">¡Introduce tu código secreto abajo para recibir puntos instantáneos!</p>
+                <div class="code-input-wrapper">
+                    <input type="text" id="couponInput" placeholder="escribe tu código aquí..." />
+                    <button class="btn-redeem" id="btnApplyCode">Canjear</button>
+                </div>
+            </div>
+
+            <div class="admin-promo-card">
+                <div class="admin-promo-title">✨ ¿Quieres un código solo para ti? ✨</div>
+                <div class="admin-promo-desc">¡Contacta con un administrador en el chat para conseguir tus puntos o códigos especiales organizados en las actividades de la app! 💬</div>
+                <div class="admin-list" id="codesAdminList"></div>
+            </div>
+        </div>
 
         <div class="footer-btn">
             <div class="welcome-btn">
@@ -1019,49 +247,14 @@
         </div>
     </div>
 
-    <!-- MODAL DE OPCIONES -->
-    <div class="modal-overlay" id="optionsModal">
-        <div class="modal-box">
-            <div class="modal-title">✨ Opciones ✨</div>
-            <div class="modal-message" style="font-size:1.1rem;">¿Qué deseas hacer?</div>
-            <div class="modal-actions" style="flex-direction:column; gap:10px;">
-                <button class="modal-btn confirm" id="optionBuyPoints" style="width:100%;">💳 Comprar Puntos</button>
-                <button class="modal-btn confirm" id="optionRedeemCode" style="width:100%;">🎮 Canjear Código</button>
-                <button class="modal-btn cancel" id="optionClose" style="width:100%;">Cerrar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CÓDIGO -->
-    <div class="modal-overlay" id="codeModal">
-        <div class="modal-box">
-            <div class="modal-title">✧ Canjear Código ✧</div>
-            <input type="text" class="modal-input" id="codeInput" placeholder="Ingresa tu código" maxlength="20" autocomplete="off" />
-            <div class="modal-message" id="codeMessage">
-                🌟 Ingresa el código para obtener puntos<br>
-                <span style="font-size:0.9rem;opacity:0.7;">✨ ¿Quieres un code para ti solo?<br> 
-                <a href="#" id="contactAdminsLink">📱 Contacta con los Admins</a> ✨</span>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn confirm" id="confirmCodeBtn">Canjear</button>
-                <button class="modal-btn cancel" id="closeCodeModal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CONFIRMACIÓN DE COMPRA -->
     <div class="modal-overlay" id="buyModal">
         <div class="modal-box">
-            <div class="modal-title">🐾 ¿Estás seguro? 🐾</div>
+            <div class="modal-title" id="buyModalTitle">🐾 ¿Estás seguro? 🐾</div>
             <div class="modal-message" id="buyMessage">¿Deseas comprar esta mascota?</div>
-            <div class="modal-actions">
-                <button class="modal-btn confirm" id="confirmBuyBtn">Sí ✨</button>
-                <button class="modal-btn cancel" id="cancelBuyBtn">No</button>
-            </div>
+            <div class="modal-actions" id="buyModalActions"></div>
         </div>
     </div>
 
-    <!-- MODAL ADMIN -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-box">
             <div class="modal-title" id="adminModalTitle">📱 Contacta con un Admin</div>
@@ -1073,28 +266,50 @@
         </div>
     </div>
 
-    <script>
-        // ----- CONFIGURACIÓN FIREBASE -----
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // ⚠️ REEMPLAZA ESTOS DATOS CON TUS PROPIAS CREDENCIALES DE TU PROYECTO FIREBASE ⚠️
         const firebaseConfig = {
-            apiKey: "AIzaSyC9Ie-8HqQ4e3X5k7Z9L2s4W1Q8A6T5R3Y",
-            authDomain: "points-pets.firebaseapp.com",
-            projectId: "points-pets",
-            storageBucket: "points-pets.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abc123def456"
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_PROYECTO.firebaseapp.com",
+            databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com",
+            projectId: "TU_PROYECTO",
+            storageBucket: "TU_PROYECTO.appspot.com",
+            messagingSenderId: "TU_SENDER_ID",
+            appId: "TU_APP_ID"
         };
 
-        let db;
-        try {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            db.enablePersistence().catch(err => console.warn('Firestore persistence:', err));
-        } catch (e) {
-            console.warn('Firebase ya inicializado o error:', e);
-            db = firebase.firestore();
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ----- CÓDIGOS SOLICITADOS -----
+        const defaultCodes = {
+            "7X9K2M4P": { points: 62, status: "active" },
+            "L5B1V7N3": { points: 36, status: "active" },
+            "Q8W4E2R9": { points: 29, status: "active" },
+            "Z6X3C9V5": { points: 12, status: "active" },
+            "K7J4H2G9": { points: 5, status: "active" },
+            "F8D4S2A1": { points: 5, status: "active" },
+            "GKTCOMUNITY": { points: 9000, status: "active" }
+        };
+
+        // Inicializar los códigos en Firebase si la base de datos está completamente limpia
+        async function initCodesInFirebase() {
+            try {
+                const snapshot = await get(ref(db, 'coupons'));
+                if (!snapshot.exists()) {
+                    await set(ref(db, 'coupons'), defaultCodes);
+                    console.log("Códigos globales cargados exitosamente en Firebase Realtime Database.");
+                }
+            } catch (error) {
+                console.error("Error inicializando códigos en Firebase:", error);
+            }
         }
 
-        // ----- DATOS -----
+        // ----- DATOS DE MASCOTAS -----
         const petsData = [
             { id: 1, name: 'Dragón de diamantes', price: 1800, img: 'https://static.wikia.nocookie.net/adoptme/images/6/6b/Drag%C3%B3n_de_diamante.png/revision/latest/scale-to-width/360?cb=20250304082833&path-prefix=es' },
             { id: 2, name: 'Estrella de mar', price: 600, img: 'https://static.wikia.nocookie.net/adoptme/images/e/eb/Estrella_de_mar.png/revision/latest/scale-to-width/360?cb=20260311181817&path-prefix=es', quantity: '2x' },
@@ -1113,16 +328,7 @@
             { id: 15, name: 'Panda rojo', price: 200, img: 'https://static.wikia.nocookie.net/adoptme/images/5/51/Panda_rojo.png/revision/latest/thumbnail/width/360/height/360?cb=20250304111904&path-prefix=es' }
         ];
 
-        const defaultCodes = {
-            '7X9K2M4P': { points: 62 },
-            'L5B1V7N3': { points: 36 },
-            'Q8W4E2R9': { points: 29 },
-            'Z6X3C9V5': { points: 12 },
-            'K7J4H2G9': { points: 5 },
-            'F8D4S2A1': { points: 5 },
-            'GKTCOMUNITY': { points: 9000 }
-        };
-
+        // ----- ADMINS -----
         const admins = [
             { name: 'Viví', wa: '+5491124001205' },
             { name: 'Christine', wa: '+51977681673' },
@@ -1134,29 +340,35 @@
             { name: 'Exatis', wa: '+595994299377' }
         ];
 
-        let userPoints = 0;
+        // ----- ESTADO ELEMENTAL -----
+        let userPoints = parseInt(localStorage.getItem('user_points')) || 0;
         let selectedPet = null;
+        let currentTab = 'pets';
 
+        // ----- ELEMENTOS DOM -----
         const pointsDisplay = document.getElementById('pointsDisplay');
         const catalogContainer = document.getElementById('catalogContainer');
+        const codesContainer = document.getElementById('codesContainer');
+        const appSearchBar = document.getElementById('appSearchBar');
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
-        const optionsModal = document.getElementById('optionsModal');
-        const codeModal = document.getElementById('codeModal');
-        const codeInput = document.getElementById('codeInput');
-        const codeMessage = document.getElementById('codeMessage');
         const buyModal = document.getElementById('buyModal');
         const buyMessage = document.getElementById('buyMessage');
+        const buyModalTitle = document.getElementById('buyModalTitle');
+        const buyModalActions = document.getElementById('buyModalActions');
         const adminModal = document.getElementById('adminModal');
         const adminMessage = document.getElementById('adminMessage');
         const adminList = document.getElementById('adminList');
         const adminModalTitle = document.getElementById('adminModalTitle');
+        const codesAdminList = document.getElementById('codesAdminList');
+        
+        const addPointsBtn = document.getElementById('addPointsBtn');
+        const plusDropdown = document.getElementById('plusDropdown');
 
-        // ----- FUNCIONES DE ANIMACIÓN DE MODALES -----
+        // ----- CONTROL DE MODALES -----
         function openModal(modal) {
             modal.classList.remove('closing');
             modal.style.display = 'flex';
-            // Forzar reflow para activar transición
             void modal.offsetWidth;
             modal.classList.add('active');
         }
@@ -1168,43 +380,31 @@
                 modal.classList.remove('closing');
                 modal.style.display = 'none';
                 if (callback) callback();
-            }, 400); // Coincide con la duración de la transición
+            }, 400);
         }
 
-        // ----- PERSISTENCIA -----
-        function loadLocalPoints() {
-            const saved = localStorage.getItem('pointsUser');
-            if (saved !== null) {
-                userPoints = parseInt(saved, 10);
-            } else {
-                userPoints = 0;
-            }
+        function updatePointsDisplay() {
+            pointsDisplay.textContent = userPoints;
+            localStorage.setItem('user_points', userPoints);
         }
 
-        function saveLocalPoints() {
-            localStorage.setItem('pointsUser', userPoints.toString());
-        }
+        addPointsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            plusDropdown.classList.toggle('active');
+        });
+        document.addEventListener('click', () => {
+            plusDropdown.classList.remove('active');
+        });
 
-        // ----- FIRESTORE -----
-        async function isCodeUsed(code) {
-            try {
-                const doc = await db.collection('usedCodes').doc(code).get();
-                return doc.exists && doc.data().used === true;
-            } catch (e) {
-                console.error('Error checking code:', e);
-                return false;
-            }
-        }
-
-        async function markCodeUsed(code) {
-            try {
-                await db.collection('usedCodes').doc(code).set({ used: true }, { merge: true });
-                return true;
-            } catch (e) {
-                console.error('Error marking code used:', e);
-                return false;
-            }
-        }
+        document.getElementById('optBuyPoints').addEventListener('click', () => {
+            showAdminPointsPurchase();
+        });
+        document.getElementById('optRedeemCode').addEventListener('click', () => {
+            switchTab('codes');
+        });
+        document.getElementById('optCancel').addEventListener('click', () => {
+            plusDropdown.classList.remove('active');
+        });
 
         // ----- RENDER CATÁLOGO -----
         function renderCatalog(filter = '') {
@@ -1236,7 +436,7 @@
                     </div>
                     <div class="pet-name">${pet.name} ${badgeHtml}</div>
                     <div class="pet-price">✦ ${pet.price} pts</div>
-                    <button class="pet-buy" data-id="${pet.id}">Comprar 🛒</button>
+                    <button class="pet-buy" data-id="${pet.id}">COMPRAR 🛒</button>
                 `;
                 catalogContainer.appendChild(card);
             });
@@ -1253,191 +453,177 @@
             });
         }
 
-        // ----- BÚSQUEDA -----
-        function handleSearch() {
-            const query = searchInput.value;
-            renderCatalog(query);
+        function buildCodesAdminList() {
+            codesAdminList.innerHTML = '';
+            const msg = '🐾 ¡Hola, Admin! ✨ Me gustaría pedir un código personalizado para la app de POINTS pets 🌟 ¿Me podrías guiar, por favor? 💕';
+            admins.forEach(admin => {
+                const item = document.createElement('div');
+                item.className = 'admin-item';
+                const link = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`;
+                item.innerHTML = `
+                    <span class="admin-name">👑 ${admin.name}</span>
+                    <a href="${link}" target="_blank" class="admin-wa">💬 Pedir Código</a>
+                `;
+                codesAdminList.appendChild(item);
+            });
         }
 
+        // ----- SISTEMA DE CANJEO ATÓMICO CON FIREBASE -----
+        document.getElementById('btnApplyCode').addEventListener('click', async () => {
+            const input = document.getElementById('couponInput');
+            const code = input.value.trim().toUpperCase();
+            if(!code) return;
+            
+            // Configurar modal de espera inicial
+            buyModalTitle.textContent = '🎟️ Procesando Código';
+            buyMessage.innerHTML = `Validando el código con el servidor seguro de Firebase... ⏳`;
+            buyModalActions.innerHTML = '';
+            openModal(buyModal);
+
+            const codeRef = ref(db, `coupons/${code}`);
+
+            try {
+                // Ejecutamos una transacción atómica para asegurar un solo uso a nivel mundial
+                const result = await runTransaction(codeRef, (currentData) => {
+                    if (currentData === null) {
+                        return currentData; // El código no existe
+                    }
+                    if (currentData.status === "used") {
+                        return currentData; // El código ya fue canjeado por otra persona
+                    }
+                    // Si está activo, lo marcamos como usado en este mismo instante
+                    currentData.status = "used";
+                    return currentData;
+                });
+
+                buyModalActions.innerHTML = '';
+                const btnOk = document.createElement('button');
+                btnOk.className = 'modal-btn confirm';
+                btnOk.textContent = 'Entendido ✨';
+                btnOk.addEventListener('click', () => closeModal(buyModal));
+                buyModalActions.appendChild(btnOk);
+
+                if (!result.committed || result.snapshot.val() === null) {
+                    buyModalTitle.textContent = '❌ Código Inválido';
+                    buyMessage.innerHTML = `El código <span style="color:#ff6b6b;">"${code}"</span> no existe. Revisa que esté bien escrito o pide uno a los administradores.`;
+                } else {
+                    const finalData = result.snapshot.val();
+                    // Si el estado antes de procesar ya era "used", significa que alguien ganó el canje antes
+                    if (finalData.status === "used" && result.snapshot.child('status').value !== "active") {
+                        buyModalTitle.textContent = '🔒 Código Ya Canjeado';
+                        buyMessage.innerHTML = `💔 ¡Oh, no! El código <span style="color:#ff6b6b;">"${code}"</span> ya fue reclamado por otra persona en el mundo. ¡Tienes que ser más rápido la próxima vez! 🏃‍♂️💨`;
+                    } else {
+                        // ÉXITO ABSOLUTO: El usuario actual fue el primero en ejecutar el cambio
+                        const pointsAwarded = finalData.points;
+                        userPoints += pointsAwarded;
+                        updatePointsDisplay();
+                        
+                        buyModalTitle.textContent = '🎉 ¡Éxito Total!';
+                        buyMessage.innerHTML = `¡Felicidades! Has sido el primero en canjear este código. Has recibido <span style="color:#66C2C2; font-weight:bold;">✦ ${pointsAwarded} puntos</span> a tu cuenta global. 🐾`;
+                        input.value = '';
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                buyModalTitle.textContent = '⚠️ Error de Red';
+                buyMessage.innerHTML = `Hubo un inconveniente conectando con Firebase. Inténtalo de nuevo.`;
+            }
+        });
+
+        function handleSearch() {
+            renderCatalog(searchInput.value);
+        }
         searchInput.addEventListener('input', handleSearch);
         searchBtn.addEventListener('click', handleSearch);
 
-        // ----- ACTUALIZAR PUNTOS -----
-        function updatePointsDisplay() {
-            pointsDisplay.textContent = userPoints;
-            saveLocalPoints();
-        }
-
-        // ----- BOTÓN "+" - OPCIONES -----
-        document.getElementById('addPointsBtn').addEventListener('click', () => {
-            openModal(optionsModal);
-        });
-
-        document.getElementById('optionBuyPoints').addEventListener('click', () => {
-            closeModal(optionsModal, () => {
-                adminModalTitle.textContent = '✨ Comprar Puntos ✨';
-                adminMessage.innerHTML = '🌟 ¿Quieres comprar Puntos? ¡Habla con los admin! 💬<br><span style="font-size:0.9rem;opacity:0.7;">Elige un administrador para realizar tu compra</span>';
-                adminList.innerHTML = '';
-                const mensajeBase = '🐾 ¡Hola! Me gustaría comprar puntos ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖';
-                admins.forEach(admin => {
-                    const item = document.createElement('div');
-                    item.className = 'admin-item';
-                    const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensajeBase)}`;
-                    item.innerHTML = `
-                        <span class="admin-name">${admin.name}</span>
-                        <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
-                    `;
-                    adminList.appendChild(item);
-                });
-                openModal(adminModal);
-            });
-        });
-
-        document.getElementById('optionRedeemCode').addEventListener('click', () => {
-            closeModal(optionsModal, () => {
-                codeModal.classList.remove('closing');
-                codeInput.value = '';
-                codeMessage.innerHTML = `
-                    🌟 Ingresa el código para obtener puntos<br>
-                    <span style="font-size:0.9rem;opacity:0.7;">✨ ¿Quieres un code para ti solo?<br> 
-                    <a href="#" id="contactAdminsLink">📱 Contacta con los Admins</a> ✨</span>
-                `;
-                codeMessage.style.color = '#F5F5F5';
-                openModal(codeModal);
-                codeInput.focus();
-                document.getElementById('contactAdminsLink').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    closeModal(codeModal, () => {
-                        adminModalTitle.textContent = '📱 Contacta con un Admin';
-                        adminMessage.innerHTML = '🐾 ¿Necesitas ayuda? Contacta con un administrador ✨';
-                        adminList.innerHTML = '';
-                        const mensajeBase = '🐾 ¡Hola! Necesito ayuda con POINTS pets ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖';
-                        admins.forEach(admin => {
-                            const item = document.createElement('div');
-                            item.className = 'admin-item';
-                            const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensajeBase)}`;
-                            item.innerHTML = `
-                                <span class="admin-name">${admin.name}</span>
-                                <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
-                            `;
-                            adminList.appendChild(item);
-                        });
-                        openModal(adminModal);
-                    });
-                });
-            });
-        });
-
-        document.getElementById('optionClose').addEventListener('click', () => {
-            closeModal(optionsModal);
-        });
-
-        // ----- MODAL CÓDIGO -----
-        document.getElementById('closeCodeModal').addEventListener('click', () => {
-            closeModal(codeModal, () => {
-                catalogContainer.classList.remove('hidden');
-            });
-        });
-
-        document.getElementById('confirmCodeBtn').addEventListener('click', async () => {
-            const code = codeInput.value.trim().toUpperCase();
-            if (!code) {
-                codeMessage.innerHTML = '⚠️ Ingresa un código válido';
-                codeMessage.style.color = '#FF6B6B';
-                return;
-            }
-
-            if (!defaultCodes[code]) {
-                codeMessage.innerHTML = '❌ Código incorrecto o inexistente';
-                codeMessage.style.color = '#FF6B6B';
-                return;
-            }
-
-            const used = await isCodeUsed(code);
-            if (used) {
-                codeMessage.innerHTML = '❌ Este código ya fue utilizado por otro usuario';
-                codeMessage.style.color = '#FF6B6B';
-                return;
-            }
-
-            const marked = await markCodeUsed(code);
-            if (!marked) {
-                codeMessage.innerHTML = '⚠️ Error al validar el código, intenta de nuevo';
-                codeMessage.style.color = '#FF6B6B';
-                return;
-            }
-
-            const points = defaultCodes[code].points;
-            userPoints += points;
-            updatePointsDisplay();
-            codeMessage.innerHTML = `✅ ¡Canjeaste ${points} puntos! 🎉`;
-            codeMessage.style.color = '#66C2C2';
-            codeInput.value = '';
-            setTimeout(() => {
-                closeModal(codeModal, () => {
-                    catalogContainer.classList.remove('hidden');
-                });
-            }, 1200);
-        });
-
-        // ----- CONFIRMACIÓN DE COMPRA -----
         function showBuyConfirmation(pet) {
-            buyMessage.textContent = `¿Comprar "${pet.name}" por ${pet.price} puntos?`;
+            buyModalActions.innerHTML = '';
+            buyModalTitle.textContent = '🐾 ¿Estás seguro? 🐾';
+            buyMessage.textContent = `¿Deseas comprar "${pet.name}" por ${pet.price} puntos?`;
+            
+            const btnYes = document.createElement('button');
+            btnYes.className = 'modal-btn confirm';
+            btnYes.textContent = 'Sí ✨';
+            btnYes.addEventListener('click', () => {
+                closeModal(buyModal, () => {
+                    if (userPoints < pet.price) {
+                        showInsufficientPointsModal(pet);
+                    } else {
+                        showAdminList(pet.name, pet.price);
+                    }
+                });
+            });
+
+            const btnNo = document.createElement('button');
+            btnNo.className = 'modal-btn cancel';
+            btnNo.textContent = 'No';
+            btnNo.addEventListener('click', () => { closeModal(buyModal); });
+
+            buyModalActions.appendChild(btnYes);
+            buyModalActions.appendChild(btnNo);
             openModal(buyModal);
         }
 
-        document.getElementById('confirmBuyBtn').addEventListener('click', () => {
-            if (!selectedPet) return;
-            const pet = selectedPet;
-            if (userPoints < pet.price) {
-                closeModal(buyModal, () => {
-                    const alertModal = document.createElement('div');
-                    alertModal.className = 'modal-overlay';
-                    alertModal.innerHTML = `
-                        <div class="modal-box">
-                            <div class="modal-title">⚠️</div>
-                            <div class="modal-message" style="color:#FF6B6B;font-size:1.2rem;">❌ Falta de Puntos 😢</div>
-                            <div class="modal-actions">
-                                <button class="modal-btn confirm" id="alertOkBtn">OK</button>
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(alertModal);
-                    openModal(alertModal);
-                    alertModal.querySelector('#alertOkBtn').addEventListener('click', () => {
-                        closeModal(alertModal, () => alertModal.remove());
-                    });
-                });
-                selectedPet = null;
-                return;
-            }
-
-            userPoints -= pet.price;
-            updatePointsDisplay();
-            closeModal(buyModal, () => {
-                showAdminList(pet.name, pet.price);
+        function showInsufficientPointsModal(pet) {
+            buyModalActions.innerHTML = '';
+            buyModalTitle.textContent = '❌ Puntos Insuficientes ❌';
+            buyMessage.innerHTML = `No tienes puntos suficientes para comprar "${pet.name}".<br>Te faltan ✦ ${pet.price - userPoints} pts.<br><br>¿Qué deseas hacer?`;
+            
+            const btnBuy = document.createElement('button');
+            btnBuy.className = 'modal-btn confirm';
+            btnBuy.textContent = 'Comprar Puntos 💳';
+            btnBuy.addEventListener('click', () => {
+                closeModal(buyModal, () => { showAdminPointsPurchase(); });
             });
-            selectedPet = null;
-        });
 
-        document.getElementById('cancelBuyBtn').addEventListener('click', () => {
-            closeModal(buyModal);
-            selectedPet = null;
-        });
+            const btnRedeem = document.createElement('button');
+            btnRedeem.className = 'modal-btn confirm';
+            btnRedeem.textContent = 'Canjear Código 🎁';
+            btnRedeem.addEventListener('click', () => {
+                closeModal(buyModal, () => { switchTab('codes'); });
+            });
 
-        // ----- ADMIN LIST -----
+            const btnCancel = document.createElement('button');
+            btnCancel.className = 'modal-btn cancel';
+            btnCancel.textContent = 'Cancelar';
+            btnCancel.addEventListener('click', () => { closeModal(buyModal); });
+
+            buyModalActions.appendChild(btnBuy);
+            buyModalActions.appendChild(btnRedeem);
+            buyModalActions.appendChild(btnCancel);
+            openModal(buyModal);
+        }
+
+        function showAdminPointsPurchase() {
+            adminModalTitle.textContent = '✨ Comprar Puntos ✨';
+            adminMessage.innerHTML = '🌟 ¿Quieres comprar Puntos? ¡Habla con los admin! 💬<br><span style="font-size:0.9rem;opacity:0.7;">Elige un administrador para realizar tu compra</span>';
+            adminList.innerHTML = '';
+            const msg = '🐾 ¡Hola! Me gustaría comprar puntos ✨ ¿Podrías ayudarme con los métodos de pago? 🌟 ¡Gracias! 💖';
+            admins.forEach(admin => {
+                const item = document.createElement('div');
+                item.className = 'admin-item';
+                const link = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`;
+                item.innerHTML = `
+                    <span class="admin-name">${admin.name}</span>
+                    <a href="${link}" target="_blank" class="admin-wa">💬 WhatsApp</a>
+                `;
+                adminList.appendChild(item);
+            });
+            openModal(adminModal);
+        }
+
         function showAdminList(petName, petPrice) {
             adminModalTitle.textContent = '📱 Contacta con un Admin';
             adminMessage.innerHTML = `🐾 Compra: ${petName} (${petPrice} pts) - Elige un admin ✨<br><span style="font-size:0.9rem;opacity:0.7;">Ellos te ayudarán con tu compra</span>`;
             adminList.innerHTML = '';
-            const mensajeBase = `🐾 ¡Hola! Me gustaría comprar ${petName} por ${petPrice} puntos ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖`;
+            const msg = `🐾 ¡Hola! Me gustaría comprar ${petName} por ${petPrice} puntos ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖`;
             admins.forEach(admin => {
                 const item = document.createElement('div');
                 item.className = 'admin-item';
-                const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensajeBase)}`;
+                const link = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`;
                 item.innerHTML = `
                     <span class="admin-name">${admin.name}</span>
-                    <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
+                    <a href="${link}" target="_blank" class="admin-wa">💬 WhatsApp</a>
                 `;
                 adminList.appendChild(item);
             });
@@ -1448,101 +634,71 @@
             closeModal(adminModal);
         });
 
-        // ----- TABS -----
+        function switchTab(target) {
+            currentTab = target;
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.dataset.tab === target) link.classList.add('active');
+            });
+
+            if (target === 'pets') {
+                catalogContainer.style.display = 'grid';
+                codesContainer.classList.remove('active');
+                appSearchBar.style.display = 'flex';
+                renderCatalog(searchInput.value);
+            } else if (target === 'codes') {
+                catalogContainer.style.display = 'none';
+                codesContainer.classList.add('active');
+                appSearchBar.style.display = 'none';
+            } else if (target === 'contact') {
+                switchTab('pets');
+                adminModalTitle.textContent = '📱 Contacto';
+                adminMessage.innerHTML = '🐾 ¿Necesitas ayuda? Contacta con un administrador ✨';
+                adminList.innerHTML = '';
+                const msg = '🐾 ¡Hola! Necesito ayuda con POINTS pets ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖';
+                admins.forEach(admin => {
+                    const item = document.createElement('div');
+                    item.className = 'admin-item';
+                    const link = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`;
+                    item.innerHTML = `
+                        <span class="admin-name">${admin.name}</span>
+                        <a href="${link}" target="_blank" class="admin-wa">💬 WhatsApp</a>
+                    `;
+                    adminList.appendChild(item);
+                });
+                openModal(adminModal);
+            } else if (target === 'group') {
+                switchTab('pets');
+                window.open('https://chat.whatsapp.com/HC3SGJeJVTn2bq7pWRNhWQ', '_blank');
+            }
+        }
+
         document.querySelectorAll('.tab-link').forEach(tab => {
             tab.addEventListener('click', (e) => {
                 e.preventDefault();
-                const target = tab.dataset.tab;
-                if (target === 'pets') {
-                    catalogContainer.classList.remove('hidden');
-                    renderCatalog(searchInput.value);
-                } else if (target === 'contact') {
-                    catalogContainer.classList.add('hidden');
-                    adminModalTitle.textContent = '📱 Contacto';
-                    adminMessage.innerHTML = '🐾 ¿Necesitas ayuda? Contacta con un administrador ✨';
-                    adminList.innerHTML = '';
-                    const mensajeBase = '🐾 ¡Hola! Necesito ayuda con POINTS pets ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖';
-                    admins.forEach(admin => {
-                        const item = document.createElement('div');
-                        item.className = 'admin-item';
-                        const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensajeBase)}`;
-                        item.innerHTML = `
-                            <span class="admin-name">${admin.name}</span>
-                            <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
-                        `;
-                        adminList.appendChild(item);
-                    });
-                    openModal(adminModal);
-                } else if (target === 'codes') {
-                    catalogContainer.classList.add('hidden');
-                    // Abrir modal de código directamente
-                    codeInput.value = '';
-                    codeMessage.innerHTML = `
-                        🌟 Ingresa el código para obtener puntos<br>
-                        <span style="font-size:0.9rem;opacity:0.7;">✨ ¿Quieres un code para ti solo?<br> 
-                        <a href="#" id="contactAdminsLink2">📱 Contacta con los Admins</a> ✨</span>
-                    `;
-                    codeMessage.style.color = '#F5F5F5';
-                    openModal(codeModal);
-                    codeInput.focus();
-                    document.getElementById('contactAdminsLink2').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        closeModal(codeModal, () => {
-                            adminModalTitle.textContent = '📱 Contacta con un Admin';
-                            adminMessage.innerHTML = '🐾 ¿Necesitas ayuda? Contacta con un administrador ✨';
-                            adminList.innerHTML = '';
-                            const mensajeBase = '🐾 ¡Hola! Necesito ayuda con POINTS pets ✨ ¿Podrías ayudarme? 🌟 ¡Gracias! 💖';
-                            admins.forEach(admin => {
-                                const item = document.createElement('div');
-                                item.className = 'admin-item';
-                                const waLink = `https://wa.me/${admin.wa.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(mensajeBase)}`;
-                                item.innerHTML = `
-                                    <span class="admin-name">${admin.name}</span>
-                                    <a href="${waLink}" target="_blank" class="admin-wa">💬 WhatsApp</a>
-                                `;
-                                adminList.appendChild(item);
-                            });
-                            openModal(adminModal);
-                        });
-                    });
-                } else if (target === 'group') {
-                    window.open('https://chat.whatsapp.com/HC3SGJeJVTn2bq7pWRNhWQ', '_blank');
-                }
+                switchTab(tab.dataset.tab);
             });
         });
 
-        // ----- CERRAR MODALES CON ESC Y CLIC FUERA (con animación) -----
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                const modals = [optionsModal, codeModal, buyModal, adminModal];
-                modals.forEach(modal => {
-                    if (modal.classList.contains('active')) {
-                        closeModal(modal, () => {
-                            catalogContainer.classList.remove('hidden');
-                        });
-                    }
+                [buyModal, adminModal].forEach(m => {
+                    if (m.classList.contains('active')) closeModal(m);
                 });
             }
         });
 
-        [optionsModal, codeModal, buyModal, adminModal].forEach(modal => {
+        [buyModal, adminModal].forEach(modal => {
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(modal, () => {
-                        catalogContainer.classList.remove('hidden');
-                    });
-                }
+                if (e.target === modal) closeModal(modal);
             });
         });
 
-        // ----- INICIALIZAR -----
-        loadLocalPoints();
-        renderCatalog();
+        // Ejecuciones iniciales
+        initCodesInFirebase();
         updatePointsDisplay();
-        catalogContainer.classList.remove('hidden');
-
-        console.log('🐾 POINTS pets - Animaciones fluidas mejoradas');
-        console.log('Códigos disponibles:', Object.keys(defaultCodes));
+        buildCodesAdminList();
+        renderCatalog();
     </script>
 </body>
-              </html>
+</html>
